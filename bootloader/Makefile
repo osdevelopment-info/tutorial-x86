@@ -1,13 +1,23 @@
 NASM = /usr/bin/nasm
 NASM_OPTS = -f bin
 
-all: bootloader pdf
+all: floppy pdf
+
+floppy: bootloader dummypayload
+	dd if=/dev/zero of=image bs=512 count=2878
+	cat bootloader dummypayload image > floppy
 
 bootloader.asm: bootloader.nw
 	notangle -Rbootloader.asm bootloader.nw > bootloader.asm
 
 bootloader: bootloader.asm
 	$(NASM) $(NASM_OPTS) bootloader.asm -l bootloader.lst -o bootloader
+
+dummypayload.asm: bootloader.nw
+	notangle -Rdummypayload.asm bootloader.nw > dummypayload.asm
+
+dummypayload: dummypayload.asm
+	$(NASM) $(NASM_OPTS) dummypayload.asm -l dummypayload.lst -o dummypayload
 
 pdf: bootloader.nw
 	nodefs bootloader.nw | sort -u > bootloader.defs
