@@ -41,9 +41,29 @@
 
 \setacronymstyle{long-short}
 
+\newglossaryentry{C/H/S}{
+    name=C/H/S,
+    description={Short for Cylinder/Head/Sector, used for addressing sectors at floppy disks or hard disks}
+}
+
+\newglossaryentry{CPU}{
+    name=CPU,
+    description={Central Processing Unit}
+}
+
+\newglossaryentry{gdb}{
+    name=gdb,
+    description={The GNU Debugger}
+}
+
+\newglossaryentry{NASM}{
+    name=NASM,
+    description={The Netwide Assembler found at \url{https://www.nasm.us/}}
+}
+
 \newglossaryentry{x86}{
     name=x86,
-    description={x86 denotes a microprocessor architecture based on the 8086/8088}
+    description={A microprocessor architecture based on the 8086/8088}
 }
 
 \newtheorem{definition}{Definition}
@@ -68,15 +88,25 @@
 
 \tableofcontents
 
-\chapter{Introduction}
+\chapter{Overview}
 
-\section{Overview}
+\section{Introduction}
 
-\section{Nasm}
+This project is a simple bootloader that is intended to support tutorials for \gls{x86} tutorials. Basically this is a
+step~1 bootloader.
 
-TBD
+The bootloader loads up to 64 sectors (32~KiB) following the boot sector from a (virtual) floppy disk. The limitation
+to 32~KiB is intentionally as \gls{gdb} can only handle 32~bit or 64~bit code and does not understand the segmentation
+of the processor 8086.
 
-\gls{x86}
+In the following sections the requirements to create the bootloader are shown.
+
+\section{NASM}
+
+This project uses \gls{NASM} as assembler.
+
+The assembly file starts with the following preeamble which sets the \gls{CPU} to the 8086 processor and 16~bit code
+which is needed for every bootloader at the \gls{x86} architectur.
 
 <<preamble>>=
 bits 16
@@ -86,11 +116,157 @@ cpu 8086
 
 @
 
-\chapter{Loading the code}
+\chapter{Theory}
+
+\section{Introduction}
+
+In this chapter we will do a little bit of theory to design our (stage~1) bootloader.
+
+\section{Memory Layout}
+
+After the bootloader executed we want to have the following memory layout. We only show the relevant parts for our
+bootloader.
+
+\begin{tabular}{|r|r|r|l|}
+\hline
+start & end & size & meaning \\ \hline
+0x08000 & 0x08000 & 1 & number of sectors to read after the first sector loaded \\ \hline
+0x08001 & 0x0ffff & 32~KiB & loaded code \\ \hline
+0x10000 & 0x1ffff & 64~KiB & stack for loaded code \\ \hline
+\end{tabular}
+
+\section{Loaded Code Layout}
+
+When the code is loaded the following contents is in the registers.
+
+\begin{tabular}{|l|r|l|}
+\hline
+register & content & meaning \\ \hline
+AX & xxxx & content unknown \\ \hline
+BX & xxxx & content unknown \\ \hline
+CX & xxxx & content unknown \\ \hline
+DX & xxxx & content unknown \\ \hline
+SI & xxxx & content unknown \\ \hline
+DI & xxxx & content unknown \\ \hline
+BP & xxxx & content unknown \\ \hline
+SP & 0xfffe & TOS \\ \hline
+IP & 0x8001 & first byte of the executable code loaded \\ \hline
+CS & 0x0000 & code segment base \\ \hline
+SS & 0x1000 & stack segment base \\ \hline
+DS & xxxx & unknown content \\ \hline
+ES & xxxx & unknown content \\ \hline
+\end{tabular}
+
+\chapter{Code of the Bootloader}
+
+\section{Basics}
+
+The bootloader is in the first sector of the floppy disk and its maximum size is 510~bytes (512~bytes minus 2~bytes for
+the magic bytes).
+
+So start with the preamble of our program.
 
 <<bootloader.asm>>=
 <<preamble>>
+section .text
+org 0x7c00
+@
+
+First we ensure that our registers \verb|CS| and \verb|IP| have the intended values (\verb|CS|~=~0x0000 and
+\verb|IP|~=~0x7c05) by doing a far jump. The address (0x0000:0x7c05) is the byte directly after this jump. The value
+0x0000 in \verb|CS| is needed because \gls{gdb} does not understand 8086 segments.
+
+<<bootloader.asm>>=
+     jmp       0x0000:0x7c05
+@
+
+Now we setup a few things so that we can work without disturbance. First we determine the amount of lower memory we
+have which sould be at least 256~KiB. Else we will halt the boot process (for the moment without notifying the user).
+
+<<bootloader.asm>>=
+     int       0x12
+     cmp       AX,256
+     ja        enoughMem
      hlt
+enoughMem:
+@
+
+Next we will setup the stack that we can use also during the load process.
+
+<<bootloader.asm>>=
+     mov       AX,0x1000
+     mov       SS,AX
+     mov       SP,0xfffe
+@
+
+Now we setup a datasegment below our program code so that we can use some data area.
+
+<<bootloader.asm>>=
+     mov       AX,0x0000
+     mov       DS,AX
+@
+
+The layout of our data area relative to \verb|DS| will be
+
+\begin{tabular}{|r|r|l|}
+\hline
+address & size & content \\ \hline
+0x0500 & 1 & the lower 8~bit of max cylinder \# \\ \hline
+0x0501 & 1 & bits~6-7: high 2~bits of max cylinder \# , bits~0-5 of max sector \# \\ \hline
+0x0502 & 1 & of max head \# \\ \hline
+\end{tabular}
+
+Now we determine the geometry of the floppy drive and save the values to the data segment.
+
+<<bootloader.asm>>=
+     mov       ES,AX
+     mov       BX,AX
+     mov       AH,0x08
+     mov       DL,0x00
+     int       0x13
+     mov       SI,0x0500
+     mov       [SI],CH
+     mov       [SI+1],CL
+     mov       [SI+2],DH
+@
+
+Next we read in the first sector after the boot sector from the first floppy disk. This sector is located at 0/0/1
+(\gls{C/H/S}). The registers contain the following values for the call of \verb|int 0x13|.
+
+\begin{tabular}{|l|l|}
+\hline
+AH & function number to interrupt (read sectors) \\ \hline
+AL & number of sectors to read \\ \hline
+CH & cylinder number \\ \hline
+CL & sector number \\ \hline
+DH & head number \\ \hline
+DL & drive number \\ \hline
+ES & segment of the data buffer \\ \hline
+BX & the address of the data buffer \\ \hline
+\end{tabular}
+
+<<bootloader.asm>>=
+     mov       AH,0x02
+     mov       AL,0x01
+     mov       CH,0x00
+     mov       CL,0x01
+     mov       DH,0x00
+     mov       DL,0x00
+     mov       BX,0x0000
+     mov       ES,BX
+     mov       BX,0x8000
+     int       0x13
+     hlt
+@
+
+We expect the first byte of the loaded code to contain the number of sectors to load. For this we need to determine the
+layout of the drive to not access invalid cylinders/heads/sectors. So we determine now the geometry of the floppy drive.
+
+Now we add the magic bytes and the bootloader is done.
+
+<<bootloader.asm>>=
+     times 510-($-$$) db 0
+     db 0x55,0xaa
 @
 
 \appendix
