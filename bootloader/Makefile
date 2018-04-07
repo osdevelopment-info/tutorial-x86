@@ -29,9 +29,12 @@ pdf: bootloader.nw
 	xelatex -8bit bootloader
 
 clean:
+	rm -f dummypayload image floppy
+	rm -f *~
 	rm -f *.acn
 	rm -f *.acr
 	rm -f *.alg
+	rm -f *.asm
 	rm -f *.aux
 	rm -f *.defs
 	rm -f *.glg
@@ -47,6 +50,7 @@ clean:
 	rm -f *.ist
 	rm -f *.log
 	rm -f *.out
+	rm -f *.pdf
 	rm -f *.tex
 	rm -f *.toc
 	rm -f *.lst
