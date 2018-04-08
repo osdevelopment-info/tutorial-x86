@@ -116,7 +116,7 @@ cpu 8086
 
 @
 
-\chapter{Theory}
+\chapter{Design}
 
 \section{Introduction}
 
@@ -127,6 +127,7 @@ In this chapter we will do a little bit of theory to design our (stage~1) bootlo
 After the bootloader executed we want to have the following memory layout. We only show the relevant parts for our
 bootloader.
 
+\vspace{1ex}
 \begin{tabular}{|r|r|r|l|}
 \hline
 start & end & size & meaning \\ \hline
@@ -139,6 +140,7 @@ start & end & size & meaning \\ \hline
 
 When the code is loaded the following contents is in the registers.
 
+\vspace{1ex}
 \begin{tabular}{|l|r|l|}
 \hline
 register & content & meaning \\ \hline
@@ -191,7 +193,12 @@ address & size & content \\ \hline
 0x0500 & 1 & boot device \\ \hline
 0x0501 & 1 & the lower 8~bit of max cylinder \# \\ \hline
 0x0502 & 1 & bits~6-7: high 2~bits of max cylinder \# , bits~0-5 of max sector \# \\ \hline
-0x0503 & 1 & of max head \# \\ \hline
+0x0503 & 1 & bits~0-7 of max head \# \\ \hline
+0x0504 & 1 & number of sectors to read \\ \hline
+0x0505 & 1 & last sector (absolute) read \\ \hline
+0x0506 & 2 & last cylinder read \\ \hline
+0x0508 & 1 & last sector (in cylinder) read \\ \hline
+0x0509 & 1 & last head read \\ \hline
 \end{tabular}
 
 <<bootloader.asm>>=
@@ -235,16 +242,18 @@ Now we determine the geometry of the floppy drive and save the values to the dat
 Next we read in the first sector after the boot sector from the first floppy disk. This sector is located at 0/0/1
 (\gls{C/H/S}). The registers contain the following values for the call of \verb|int 0x13|.
 
-\begin{tabular}{|l|l|}
+\vspace{1ex}
+\begin{tabular}{|l|r|l|}
 \hline
-AH & function number to interrupt (read sectors) \\ \hline
-AL & number of sectors to read \\ \hline
-CH & cylinder number \\ \hline
-CL & sector number \\ \hline
-DH & head number \\ \hline
-DL & drive number \\ \hline
-ES & segment of the data buffer \\ \hline
-BX & the address of the data buffer \\ \hline
+Register & Value & Meaning \\ \hline
+AH & 2 & function number to interrupt (read sectors) \\ \hline
+AL & 1 & number of sectors to read \\ \hline
+CH & 0 & cylinder number \\ \hline
+CL & 2 & sector number \\ \hline
+DH & 0 & head number \\ \hline
+DL & [SI] & drive number (previously saved) \\ \hline
+ES & 0x0000 & segment of the data buffer \\ \hline
+BX & 0x8000 & the address of the data buffer \\ \hline
 \end{tabular}
 
 <<bootloader.asm>>=
@@ -253,18 +262,25 @@ BX & the address of the data buffer \\ \hline
      mov       CH,0x00
      mov       CL,0x02
      mov       DH,0x00
-     mov       DL,0x00
+     mov       DL,[SI]
      push      CS
      pop       ES
      mov       BX,0x8000
      int       0x13
 @
 
+Now we check how many sectors we still have to read (from \verb|0x8000|) and save this to \verb|0x0504|.
+
+<<bootloader.asm>>=
+     mov       AX,[0x8000]
+     mov       [SI+4],AX
+@
+
 Now we add the jump to the loaded code and the magic bytes and the bootloader is done.
 
 <<bootloader.asm>>=
      jmp       0x8001
-     times 510-($-$$) db 0
+     times 510-($-$$) nop
      db 0x55,0xaa
 @
 
@@ -279,6 +295,7 @@ section .text
 org 0x8000
      db             0x00
      hlt
+     times 512-($-$$) 90
 @
 
 \appendix
