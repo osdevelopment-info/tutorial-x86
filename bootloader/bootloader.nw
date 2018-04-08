@@ -187,18 +187,20 @@ program code for saving some values.
 
 The layout of our data area will be
 
-\begin{tabular}{|r|r|l|}
+\vspace{1ex}
+\begin{tabular}{|r|r|r|l|}
 \hline
-address & size & content \\ \hline
-0x0500 & 1 & boot device \\ \hline
-0x0501 & 1 & the lower 8~bit of max cylinder \# \\ \hline
-0x0502 & 1 & bits~6-7: high 2~bits of max cylinder \# , bits~0-5 of max sector \# \\ \hline
-0x0503 & 1 & bits~0-7 of max head \# \\ \hline
-0x0504 & 1 & number of sectors to read \\ \hline
-0x0505 & 1 & last sector (absolute) read \\ \hline
-0x0506 & 2 & last cylinder read \\ \hline
-0x0508 & 1 & last sector (in cylinder) read \\ \hline
-0x0509 & 1 & last head read \\ \hline
+address & adr. rel. to SI & size & content \\ \hline
+0x0500 & 0x00 & 1 & boot device \\ \hline
+0x0501 & 0x01 & 1 & max sector \# (max 63) \\ \hline
+0x0502 & 0x02 & 2 & max cylinder \# (max 1023) \\ \hline
+0x0504 & 0x04 & 1 & max head \# (max 255) \\ \hline
+0x0505 & 0x05 & 1 & number of sectors to read \\ \hline
+0x0506 & 0x06 & 1 & last sector (absolute) read \\ \hline
+0x0507 & 0x07 & 1 & last sector (in cylinder) read \\ \hline
+0x0508 & 0x08 & 2 & last cylinder read \\ \hline
+0x050a & 0x0a & 2 & address where the next sector is read in \\ \hline
+0x050c & 0x0c & 1 & last head read \\ \hline
 \end{tabular}
 
 <<bootloader.asm>>=
@@ -208,14 +210,15 @@ address & size & content \\ \hline
      mov       [SI],DL
 @
 
-Next we determine the amount of lower memory we have which sould be at least 128~KiB. Else we will halt the boot process
-(for the moment without notifying the user).
+Next we determine the amount of lower memory we have which sould be at least 128~KiB. Else we jump to an error handler
+with \verb|AL| set to 1 (as error code).
 
 <<bootloader.asm>>=
      int       0x12
      cmp       AX,128
      ja        enoughMem
-     hlt
+     mov       AL,0x01
+     jmp       error
 enoughMem:
 @
 
@@ -227,20 +230,36 @@ Next we will setup the stack that we can use also during the load process.
      mov       SP,0xfffe
 @
 
-Now we determine the geometry of the floppy drive and save the values to the data segment.
+Now we determine the geometry of the floppy drive and save the values to the data segment. If this fails we set the
+error code (in \verb|AL|) for our error routine to 2. So the value in \verb|AH|, which is the error code from
+\verb|int 0x13|, remains available for the error routine.
 
 <<bootloader.asm>>=
-     mov       BX,0x0000
+     push      CS
+     pop       ES
+     mov       DI,0x0000
      mov       AH,0x08
      mov       DL,[SI]
      int       0x13
-     mov       [SI+1],CH
-     mov       [SI+2],CL
-     mov       [SI+3],DH
+     jnc       geometryread
+     mov       AL,0x02
+     jmp       error
+geometryread:
+     mov       [SI+0x04],DH
+     mov       AL,CL
+     and       AL,0x3f
+     mov       [SI+0x01],AL
+     mov       AL,CH
+     mov       AH,CL
+     mov       CL,6
+     shr       AH,CL
+     mov       [SI+0x02],AX
 @
 
-Next we read in the first sector after the boot sector from the first floppy disk. This sector is located at 0/0/1
-(\gls{C/H/S}). The registers contain the following values for the call of \verb|int 0x13|.
+Next we read in the first sector after the boot sector from the first floppy disk. This sector is located at 0/0/2
+(\gls{C/H/S}). The registers contain the following values for the call of \verb|int 0x13|. The final value of the
+cylinders is first placed into \verb|CX| and then moved to \verb|CH|. This only works if we assume that the cyclinder
+number is not above 255.
 
 \vspace{1ex}
 \begin{tabular}{|l|r|l|}
@@ -253,32 +272,157 @@ CL & 2 & sector number \\ \hline
 DH & 0 & head number \\ \hline
 DL & [SI] & drive number (previously saved) \\ \hline
 ES & 0x0000 & segment of the data buffer \\ \hline
-BX & 0x8000 & the address of the data buffer \\ \hline
+BX & [SI+0x0a] & the address of the data buffer \\ \hline
 \end{tabular}
 
 <<bootloader.asm>>=
-     mov       AH,0x02
-     mov       AL,0x01
-     mov       CH,0x00
+     mov       AX,0x0201
+     mov       CX,0x0000
+     mov       [SI+0x08],CX
      mov       CL,0x02
+     mov       [SI+0x07],CL
      mov       DH,0x00
+     mov       [SI+0x0c],DH
      mov       DL,[SI]
-     push      CS
-     pop       ES
      mov       BX,0x8000
      int       0x13
+     jnc       firstreadsuccess
+     mov       AL,0x03
+     jmp       error
+firstreadsuccess:
 @
 
-Now we check how many sectors we still have to read (from \verb|0x8000|) and save this to \verb|0x0504|.
+After we read the sector we increment the address where the next sector will be read into by 512 and store it.
 
 <<bootloader.asm>>=
-     mov       AX,[0x8000]
-     mov       [SI+4],AX
+     add       BX,512
+     mov       [SI+0x0a],BX
+@
+
+Now we check how many sectors we still have to read (from \verb|0x8000|) and save this to \verb|0x0505|. Also we set the
+value of \verb|0x0506| to 0 because that is the sector we just read.
+
+<<bootloader.asm>>=
+     mov       AL,[0x8000]
+     mov       [SI+0x05],AL
+     mov       AL,0x0000
+     mov       [SI+0x06],AL
+@
+
+Next we check if there are still sectors to read else we end the sector read.
+
+<<bootloader.asm>>=
+checknextsect:
+     mov       AH,[SI+0x05]
+     mov       AL,[SI+0x06]
+     cmp       AH,AL
+     ja        nextsectread
+     jmp       sectreaddone
+@
+
+So here we know that we have to read (at least) one more sector. So we load all data needed into the registers as
+followed
+
+\vspace{1ex}
+\begin{tabular}{|l|l|}
+\hline
+Register & Meaning \\ \hline
+BX & last cylinder read \\ \hline
+CL & last sector (in cylinder) read \\ \hline
+CH & last head read \\ \hline
+\end{tabular}
+
+<<bootloader.asm>>=
+nextsectread:
+     mov       BX,[SI+0x08]
+     mov       CL,[SI+0x07]
+     mov       CH,[SI+0x0c]
+@
+
+Now we do some calculations. We adjust the values according to the geometry of the boot drive. So first we increment the
+last sector read and compare the new value with the maximum number of sectors of the drive. If the maximum number of
+sectors is exceeded we set the sector number to 1 and increment the head number.
+
+<<bootloader.asm>>=
+     inc       CL
+     mov       AL,[SI+0x01]
+     cmp       AL,CL
+     jb        adjusthead
+     jmp       readsector
+adjusthead:
+     mov       CL,0x01
+     inc       CH
+@
+
+Next we check the result of the increment of the head. Here we have to check for 2 conditions because we can have a
+maximum head number of 255 which we check with the overflow flag. If the head number is above the maximum then we adjust
+the cylinder.
+
+<<bootloader.asm>>=
+     jo        adjustcyl
+     mov       AL,[SI+0x04]
+     cmp       AL,CH
+     jb        adjustcyl
+     jmp       readsector
+adjustcyl:
+     mov       CH,0x00
+     inc       BX
+@
+
+At last we check the number of cylinders. If now (after an increment) the cylinder number is above the maximum cylinder
+number then we will jump to the error routine.
+
+<<bootloader.asm>>=
+     mov       AX,[SI+0x02]
+     cmp       AX,BX
+     jb        cyloverflow
+     jmp       readsector
+cyloverflow:
+     mov       AL,0x04
+     jmp       error
+@
+
+Now that we have calculated the next sector to read we will read it from the floppy disk.
+
+<<bootloader.asm>>=
+readsector:
+     mov       DL,CL
+     mov       AX,CX
+     xchg      AH,AL
+     mov       CL,6
+     shl       AL,CL
+     mov       CX,AX
+     or        CL,DL
+     mov       DH,CH
+     mov       AX,0x0201
+     mov       DL,[SI]
+     mov       BX,[SI+0x0a]
+     int       0x13
+     jnc       readsuccess
+     mov       AL,0x04
+     jmp       error
+readsuccess:
+@
+
+Last we add 512 to the address for the next sector and save it. Then we test for the next sector to load.
+
+<<bootloader.asm>>=
+     add       BX,512
+     mov       [SI+0x0a],BX
+     jmp       checknextsect
+@
+
+Now we add an error handling which simply halts at the moment.
+
+<<bootloader.asm>>=
+error:
+     hlt
 @
 
 Now we add the jump to the loaded code and the magic bytes and the bootloader is done.
 
 <<bootloader.asm>>=
+sectreaddone:
      jmp       0x8001
      times 510-($-$$) nop
      db 0x55,0xaa
@@ -295,7 +439,7 @@ section .text
 org 0x8000
      db             0x00
      hlt
-     times 512-($-$$) 90
+     times 512-($-$$) nop
 @
 
 \appendix
