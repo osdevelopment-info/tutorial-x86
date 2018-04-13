@@ -63,11 +63,17 @@
 
 \chapter{Introduction}
 
+\section{Overview}
+
+\section{Environment}
+
+\chapter{8086}
+
+\chapter{Temp}
+
 \begin{itemize}
 
-\item 8086 (Intel)
-
-\item 8087 (Intel)
+\item 8087
 
 \item 286/287 (Intel) / Am286 (AMD)
 

@@ -21,6 +21,5 @@ image
 *.log
 *.lst
 *.out
-*.pdf
 *.tex
 *.toc
