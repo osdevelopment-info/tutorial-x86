@@ -28,7 +28,7 @@
     linkcolor=[rgb]{0,0,.4},
     urlcolor=[rgb]{.3,0,.4},
     linktoc=all,
-    pdftitle={Meltdown and Spectre Samples},
+    pdftitle={x86 Assembly Tutorial},
 }
 
 \setkomafont{labelinglabel}{\ttfamily}
@@ -41,39 +41,12 @@
 
 \setacronymstyle{long-short}
 
-\newglossaryentry{C/H/S}{
-    name=C/H/S,
-    description={Short for Cylinder/Head/Sector, used for addressing sectors at floppy disks or hard disks}
-}
-
-\newglossaryentry{CPU}{
-    name=CPU,
-    description={Central Processing Unit}
-}
-
-\newglossaryentry{gdb}{
-    name=gdb,
-    description={The GNU Debugger}
-}
-
-\newglossaryentry{NASM}{
-    name=NASM,
-    description={The Netwide Assembler found at \url{https://www.nasm.us/}}
-}
-
-\newglossaryentry{x86}{
-    name=x86,
-    description={A microprocessor architecture based on the 8086/8088}
-}
-
-\newtheorem{definition}{Definition}
-
 \begin{document}
 @
 
 \author{U. Plonus \\ \href{mailto:u.plonus@gmail.com}{u.plonus@gmail.com}}
-\title{A Simple Bootloader}
-\subtitle{For 80x86 Tutorials}
+\title{x86 Assembly Tutorial}
+\subtitle{From 8086 to Intel~Core~Processors}
 \maketitle
 
 \begin{Verbatim}[fontsize=\small]
@@ -88,361 +61,265 @@
 
 \tableofcontents
 
-\chapter{Overview}
+\chapter{Introduction}
 
-\section{Introduction}
+\begin{itemize}
 
-This project is a simple bootloader that is intended to support tutorials for \gls{x86} tutorials. Basically this is a
-step~1 bootloader.
+\item 8086 (Intel)
 
-The bootloader loads up to 64 sectors (32~KiB) following the boot sector from a (virtual) floppy disk. The limitation
-to 32~KiB is intentionally as \gls{gdb} can only handle 32~bit or 64~bit code and does not understand the segmentation
-of the processor 8086.
+\item 8087 (Intel)
 
-In the following sections the requirements to create the bootloader are shown.
+\item 286/287 (Intel) / Am286 (AMD)
 
-\section{NASM}
+\item Intel386/387 (Intel) / Am386 (AMD)
 
-This project uses \gls{NASM} as assembler.
+\item Intel486 (Intel) / AM486/Am5x86/AMD-K5 (AMD)
 
-The assembly file starts with the following preeamble which sets the \gls{CPU} to the 8086 processor and 16~bit code
-which is needed for every bootloader at the \gls{x86} architectur.
+\item Intel Pentium (Intel) / AMD-K6 (AMD)
 
-<<preamble>>=
-bits 16
-cpu 8086
+\item CLFSH
 
-<<license>>
+\item CX8 (CMPXCHG8B (AMD))
 
-@
+\item CMPXCHG16B
 
-\chapter{Design}
-
-\section{Introduction}
-
-In this chapter we will do a little bit of theory to design our (stage~1) bootloader.
-
-\section{Memory Layout}
-
-After the bootloader executed we want to have the following memory layout. We only show the relevant parts for our
-bootloader.
-
-\vspace{1ex}
-\begin{tabular}{|r|r|r|l|}
-\hline
-start & end & size & meaning \\ \hline
-0x08000 & 0x08000 & 1 & number of sectors to read after the first sector loaded \\ \hline
-0x08001 & 0x0ffff & 32~KiB~-~1 & loaded code \\ \hline
-0x10000 & 0x1ffff & 64~KiB & stack for loaded code \\ \hline
-\end{tabular}
-
-\section{Loaded Code Layout}
-
-When the code is loaded the following contents is in the registers.
-
-\vspace{1ex}
-\begin{tabular}{|l|r|l|}
-\hline
-register & content & meaning \\ \hline
-AX & xxxx & content unknown \\ \hline
-BX & xxxx & content unknown \\ \hline
-CX & xxxx & content unknown \\ \hline
-DX & xxxx & content unknown \\ \hline
-SI & xxxx & content unknown \\ \hline
-DI & xxxx & content unknown \\ \hline
-BP & xxxx & content unknown \\ \hline
-SP & 0xfffe & TOS \\ \hline
-IP & 0x8001 & first byte of the executable code loaded \\ \hline
-CS & 0x0000 & code segment base \\ \hline
-SS & 0x1000 & stack segment base \\ \hline
-DS & xxxx & unknown content \\ \hline
-ES & xxxx & unknown content \\ \hline
-\end{tabular}
-
-\chapter{Code of the Bootloader}
-
-\section{Basics}
-
-The bootloader is in the first sector of the floppy disk and its maximum size is 510~bytes (512~bytes minus 2~bytes for
-the magic bytes).
-
-So start with the preamble of our program.
-
-<<bootloader.asm>>=
-<<preamble>>
-section .text
-org 0x7c00
-@
-
-First we ensure that our registers \verb|CS| and \verb|IP| have the intended values (\verb|CS|~=~0x0000 and
-\verb|IP|~=~0x7c05) by doing a far jump. The address (0x0000:0x7c05) is the byte directly after this jump. The value
-0x0000 in \verb|CS| is needed because \gls{gdb} does not understand 8086 segments.
-
-<<bootloader.asm>>=
-     jmp       0x0000:0x7c05
-@
-
-Now we setup a few things so that we can work without disturbance. We start with setting up a data area below our
-program code for saving some values.
-
-The layout of our data area will be
-
-\vspace{1ex}
-\begin{tabular}{|r|r|r|l|}
-\hline
-address & adr. rel. to SI & size & content \\ \hline
-0x0500 & 0x00 & 1 & boot device \\ \hline
-0x0501 & 0x01 & 1 & max sector \# (max 63) \\ \hline
-0x0502 & 0x02 & 2 & max cylinder \# (max 1023) \\ \hline
-0x0504 & 0x04 & 1 & max head \# (max 255) \\ \hline
-0x0505 & 0x05 & 1 & number of sectors to read \\ \hline
-0x0506 & 0x06 & 1 & last sector (absolute) read \\ \hline
-0x0507 & 0x07 & 1 & last sector (in cylinder) read \\ \hline
-0x0508 & 0x08 & 2 & last cylinder read \\ \hline
-0x050a & 0x0a & 2 & address where the next sector is read in \\ \hline
-0x050c & 0x0c & 1 & last head read \\ \hline
-\end{tabular}
-
-<<bootloader.asm>>=
-     push      CS
-     pop       DS
-     mov       SI,0x0500
-     mov       [SI],DL
-@
-
-Next we determine the amount of lower memory we have which sould be at least 128~KiB. Else we jump to an error handler
-with \verb|AL| set to 1 (as error code).
-
-<<bootloader.asm>>=
-     int       0x12
-     cmp       AX,128
-     ja        enoughMem
-     mov       AL,0x01
-     jmp       error
-enoughMem:
-@
-
-Next we will setup the stack that we can use also during the load process.
-
-<<bootloader.asm>>=
-     mov       AX,0x1000
-     mov       SS,AX
-     mov       SP,0xfffe
-@
-
-Now we determine the geometry of the floppy drive and save the values to the data segment. If this fails we set the
-error code (in \verb|AL|) for our error routine to 2. So the value in \verb|AH|, which is the error code from
-\verb|int 0x13|, remains available for the error routine.
-
-<<bootloader.asm>>=
-     push      CS
-     pop       ES
-     mov       DI,0x0000
-     mov       AH,0x08
-     mov       DL,[SI]
-     int       0x13
-     jnc       geometryread
-     mov       AL,0x02
-     jmp       error
-geometryread:
-     mov       [SI+0x04],DH
-     mov       AL,CL
-     and       AL,0x3f
-     mov       [SI+0x01],AL
-     mov       AL,CH
-     mov       AH,CL
-     mov       CL,6
-     shr       AH,CL
-     mov       [SI+0x02],AX
-@
-
-Next we read in the first sector after the boot sector from the first floppy disk. This sector is located at 0/0/2
-(\gls{C/H/S}). The registers contain the following values for the call of \verb|int 0x13|. The final value of the
-cylinders is first placed into \verb|CX| and then moved to \verb|CH|. This only works if we assume that the cyclinder
-number is not above 255.
-
-\vspace{1ex}
-\begin{tabular}{|l|r|l|}
-\hline
-Register & Value & Meaning \\ \hline
-AH & 2 & function number to interrupt (read sectors) \\ \hline
-AL & 1 & number of sectors to read \\ \hline
-CH & 0 & cylinder number \\ \hline
-CL & 2 & sector number \\ \hline
-DH & 0 & head number \\ \hline
-DL & [SI] & drive number (previously saved) \\ \hline
-ES & 0x0000 & segment of the data buffer \\ \hline
-BX & [SI+0x0a] & the address of the data buffer \\ \hline
-\end{tabular}
-
-<<bootloader.asm>>=
-     push      CS
-     pop       ES
-     mov       AX,0x0201
-     mov       CX,0x0000
-     mov       [SI+0x08],CX
-     mov       CL,0x02
-     mov       [SI+0x07],CL
-     mov       DH,0x00
-     mov       [SI+0x0c],DH
-     mov       DL,[SI]
-     mov       BX,0x8000
-     int       0x13
-     jnc       firstreadsuccess
-     mov       AL,0x03
-     jmp       error
-firstreadsuccess:
-@
-
-After we read the sector we increment the address where the next sector will be read into by 512 and store it.
-
-<<bootloader.asm>>=
-     add       BX,512
-     mov       [SI+0x0a],BX
-@
-
-Now we check how many sectors we still have to read (from \verb|0x8000|) and save this to \verb|0x0505|. Also we set the
-value of \verb|0x0506| to 0 because that is the sector we just read.
-
-<<bootloader.asm>>=
-     mov       AL,[0x8000]
-     mov       [SI+0x05],AL
-     mov       AL,0x0000
-     mov       [SI+0x06],AL
-@
-
-Next we check if there are still sectors to read else we end the sector read.
-
-<<bootloader.asm>>=
-checknextsect:
-     mov       AH,[SI+0x05]
-     mov       AL,[SI+0x06]
-     cmp       AH,AL
-     ja        nextsectread
-     jmp       sectreaddone
-@
-
-So here we know that we have to read (at least) one more sector. So we load all data needed into the registers as
-followed
-
-\vspace{1ex}
-\begin{tabular}{|l|l|}
-\hline
-Register & Meaning \\ \hline
-BX & last cylinder read \\ \hline
-CL & last sector (in cylinder) read \\ \hline
-CH & last head read \\ \hline
-\end{tabular}
-
-<<bootloader.asm>>=
-nextsectread:
-     mov       BX,[SI+0x08]
-     mov       CL,[SI+0x07]
-     mov       CH,[SI+0x0c]
-@
-
-Now we do some calculations. We adjust the values according to the geometry of the boot drive. So first we increment the
-last sector read and compare the new value with the maximum number of sectors of the drive. If the maximum number of
-sectors is exceeded we set the sector number to 1 and increment the head number.
-
-<<bootloader.asm>>=
-     inc       CL
-     mov       AL,[SI+0x01]
-     cmp       AL,CL
-     jb        adjusthead
-     jmp       readsector
-adjusthead:
-     mov       CL,0x01
-     inc       CH
-@
-
-Next we check the result of the increment of the head. Here we have to check for 2 conditions because we can have a
-maximum head number of 255 which we check with the overflow flag. If the head number is above the maximum then we adjust
-the cylinder.
-
-<<bootloader.asm>>=
-     jo        adjustcyl
-     mov       AL,[SI+0x04]
-     cmp       AL,CH
-     jb        adjustcyl
-     jmp       readsector
-adjustcyl:
-     mov       CH,0x00
-     inc       BX
-@
-
-At last we check the number of cylinders. If now (after an increment) the cylinder number is above the maximum cylinder
-number then we will jump to the error routine.
-
-<<bootloader.asm>>=
-     mov       AX,[SI+0x02]
-     cmp       AX,BX
-     jb        cyloverflow
-     jmp       readsector
-cyloverflow:
-     mov       AL,0x04
-     jmp       error
-@
-
-Now that we have calculated the next sector to read we will read it from the floppy disk.
-
-<<bootloader.asm>>=
-readsector:
-     mov       DL,CL
-     mov       AX,CX
-     xchg      AH,AL
-     mov       CL,6
-     shl       AL,CL
-     mov       CX,AX
-     or        CL,DL
-     mov       DH,CH
-     mov       AX,0x0201
-     mov       DL,[SI]
-     mov       BX,[SI+0x0a]
-     int       0x13
-     jnc       readsuccess
-     mov       AL,0x04
-     jmp       error
-readsuccess:
-@
-
-Last we add 512 to the address for the next sector and save it. Then we test for the next sector to load.
-
-<<bootloader.asm>>=
-     add       BX,512
-     mov       [SI+0x0a],BX
-     jmp       checknextsect
-@
-
-Now we add an error handling which simply halts at the moment.
-
-<<bootloader.asm>>=
-error:
-     hlt
-@
-
-Now we add the jump to the loaded code and the magic bytes and the bootloader is done.
-
-<<bootloader.asm>>=
-sectreaddone:
-     jmp       0x8001
-     times 510-($-$$) nop
-     db 0x55,0xaa
-@
-
-\section{Dummy Payload}
-
-To have a sector to load we create a small program that is loaded by the bootloader. This is afterwards connected with
-the bootloader to form a floppy disk image.
-
-<<dummypayload.asm>>=
-<<preamble>>
-section .text
-org 0x8000
-     db             0x00
-     hlt
-     times 512-($-$$) nop
-@
+\item CMOV
+
+\item MSR
+
+\item TSC
+
+\begin{itemize}
+\item Invariant TSC
+\end{itemize}
+
+\item RDTSCP
+
+\item SEP
+
+\item SYSCALL/SYSRET in 64-bit Mode
+
+\item MMX
+
+\item 3DNow (AMD)
+
+\item MMX ext (AMD)
+
+\item 3DNow ext (AMD)
+
+\item PREFETCHW (3DNow AMD)
+
+\item SSE
+
+\item SSE2
+
+\item SSE3
+
+\item SSSE3
+
+\item SSE4A (AMD)
+
+\item SSE4.2
+
+\item Intel~64 Architecture/Long Mode (AMD)
+
+\item MISCSELECT (SGX) (Intel)
+
+\item SGX1 (Intel)
+
+\item SGX2 (Intel)
+
+\item ENCLV (SGX) (Intel)
+
+\item ENCLS (SGX) (Intel)
+
+\item SVM (AMD)
+
+\item AVX
+
+\item AVX2
+
+\item XOP (AMD)
+
+\item AESNI (AES (AMD))
+
+\item FMA
+
+\item FMA4 (AMD)
+
+\item F16C
+
+\item RDRAND
+
+\item LZCNT (ABM (AMD))
+
+\item BMI1
+
+\item BMI2
+
+\item POPCNT
+
+\item TBM (AMD)
+
+\item MOVBE
+
+\item MONITOR
+
+\item MONITORX (AMD)
+
+\item PCMULQDQ
+
+\item FXSR
+
+\item SKINIT (AMD)
+
+\item LAHF/SAHF in 64-bit Mode
+
+\item FSGSBASE
+
+\item SHA
+
+\item CLFLUSHOPT (CLFLOPT (AMD))
+
+\item SMAP
+
+\item ADX
+
+\item RDSEED
+
+\item SME (AMD)
+
+\item SEV (AMD)
+
+\item PageFlushMgr (AMD)
+
+\item ES (AMD)
+
+\item CLZERO (AMD)
+
+\item Instruction Retired Counter (AMD)
+
+\item Error Pointer (AMD)
+
+\item XSAVEOPT
+
+\item XSAVEC
+
+\item XGETBV
+
+\item XSAVES
+
+\item XSAVE
+
+\item OSXSAVE
+
+\item HTT
+
+\item PSE-36
+
+\item PAT
+
+\item MCA
+
+\item PGE
+
+\item MTRR
+
+\item APIC
+
+\item MCE
+
+\item PAE
+
+\item PSE
+
+\item DE
+
+\item VME
+
+\item SMEP
+
+
+
+\item DTSE64 (Intel)
+
+\item MONITOR (Intel)
+
+\item DS-CPL (Intel)
+
+\item VMX (Intel)
+
+\item SMX (Intel)
+
+\item EIST (Intel)
+
+\item TM2 (Intel)
+
+\item CNXT-ID (Intel)
+
+\item SDBG (Intel)
+
+\item xTPR Update Control (Intel)
+
+\item PDCM (Intel)
+
+\item PCID (Intel)
+
+\item DCA (Intel)
+
+\item x2APIC (Intel)
+
+\item TSC-Deadline (Intel)
+
+\item PSN (Intel)
+
+\item DS (Intel)
+
+\item ACPI (Intel)
+
+\item SS (Intel)
+
+\item TM (Intel)
+
+\item PBE (Intel)
+
+\item Execute Disable Flag (Intel)
+
+\item IA32{\_}TSC{\_}ADJUST (Intel)
+
+\item HLE (Intel)
+
+\item INVPCID (Intel)
+
+\item RTM (Intel)
+
+\item RDT-M (Intel)
+
+\item MPX (Intel)
+
+\item RDT-A (Intel)
+
+\item AVX512F (Intel)
+
+\item AVX512DQ (Intel)
+
+\item AVX512{\_}IFMA (Intel)
+
+\item CLWB (Intel)
+
+\item Intel Processor Trace (Intel)
+
+\item AVX512PF (Intel)
+
+\item AVX512ER (Intel)
+
+\item AVX512CD (Intel)
+
+\item AVX512BW (Intel)
+
+\item AVX512VL (Intel)
+
+\end{itemize}
 
 \appendix
 
@@ -1605,7 +1482,7 @@ Public License instead of this License.  But first, please read
 This is a code chunk to be included by the generated asm files.
 
 <<license>>=
-;   A Simple Bootloader - For 80x86 Tutorials
+;   Meltdown and Spectre - Samples Written in Assembly
 ;   Copyright (C) 2018 U. Plonus
 ;
 ;   This program is free software: you can redistribute it and/or modify
