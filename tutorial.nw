@@ -41,6 +41,18 @@
 
 \setacronymstyle{long-short}
 
+\newacronym{fpu}{FPU}{Floating Point Unit}
+
+\newglossaryentry{x86}{
+    name=x86,
+    description={a microprocessor architecture based on the 8086/8088 from Intel}
+}
+
+\newglossaryentry{x87}{
+    name=x87,
+    description={a mathematical coprocessor for the \gls{x86}}
+}
+
 \begin{document}
 @
 
@@ -65,23 +77,61 @@
 
 \section{Overview}
 
+The \gls{x86} architecture is a wide spread microprocessor architecture used today. From time to time it could be
+helpful to understand the architecture more in depth or even develop some parts of a program in assembly language
+because you either want to tune the performance or to reduce the space needed.
+
+In this book I will go through the assembly language instructions found in modern \gls{x86} processors. I will start
+with the 8086 assembly language in chapter \ref{ch:8086} and go on to the 8087 assembly language in chapter
+\ref{ch:8087}, which is the first \gls{x87} \gls{fpu}.
+
+Further on I will visit the other CPUs like the 80286, 80386, i486 and Pentium. After that I will not go on with
+different processors but with features because potentially each processor may implement a different set of features and
+because a feature is introduced in a certain processor does not mean that every successing processor also has this
+feature.
+
+I start with the 8086 and go on through all other successing processors because some of the idiosyncrasies of the modern
+processors can be easier understand if you have the history in mind.
+
 \section{Environment}
 
 \chapter{8086}
+\label{ch:8086}
 
 \section{Introduction}
 
+\section{Moving Data Around}
+
+\section{Doing Arithmetic}
+
+\section{Doing Boolean Arithmetic}
+
+\section{Shifting and Rotating}
+
+\section{Accessing Memory}
+
+\section{Working with Conditions}
+
+\section{Using Subroutines}
+
+\section{Interrupting Work and Using System Subroutines}
+
+\section{Communicating with Periphery}
+
+\chapter{8087}
+\label{ch:8087}
+
 \chapter{Temp}
 
-\begin{itemize}
+This is a temporary chapter to help me organize this book.
 
-\item 8087
+\begin{itemize}
 
 \item 286/287 (Intel) / Am286 (AMD)
 
 \item Intel386/387 (Intel) / Am386 (AMD)
 
-\item Intel486 (Intel) / AM486/Am5x86/AMD-K5 (AMD)
+\item Intel486 (Intel) / Am486/Am5x86/AMD-K5 (AMD)
 
 \item Intel Pentium (Intel) / AMD-K6 (AMD)
 
