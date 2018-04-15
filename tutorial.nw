@@ -1288,6 +1288,48 @@
     description={Exchange and add, introduced with \nameref{ch:80486}}
 }
 
+\newglossaryentry{rsm}{
+    type=ins,
+    name=\ttfamily{RSM},
+    description={Resume from system management mode, introduced with \nameref{ch:RSM}}
+}
+
+\newglossaryentry{cpuid}{
+    type=ins,
+    name=\ttfamily{CPUID},
+    description={CPU identification, introduced with \nameref{ch:80486}}
+}
+
+\newglossaryentry{cmpxchg8b}{
+    type=ins,
+    name=\ttfamily{CMPXCHG8B},
+    description={Compare and exchange bytes, introduced with \nameref{ch:CX8}}
+}
+
+\newglossaryentry{rdmsr}{
+    type=ins,
+    name=\ttfamily{RDMSR},
+    description={Read from model specific register, introduced with \nameref{ch:MSR}}
+}
+
+\newglossaryentry{wrmsr}{
+    type=ins,
+    name=\ttfamily{WRMSR},
+    description={Write to model specific register, introduced with \nameref{ch:MSR}}
+}
+
+\newglossaryentry{rdtsc}{
+    type=ins,
+    name=\ttfamily{RDTSC},
+    description={Read time-stamp counter, introduced with \nameref{ch:TSC}}
+}
+
+\newglossaryentry{rdpmc}{
+    type=ins,
+    name=\ttfamily{RDPMC},
+    description={Read performance-monitoring counters, introduced with \nameref{ch:PMC}}
+}
+
 \begin{document}
 @
 
@@ -2006,7 +2048,6 @@ TBD\marginnote{\gls{fucompp}}
 \item i486 (Intel)
 \item Am486 (AMD)
 \item Am5x86 (AMD)
-\item AMD~K5
 \end{itemize}
 
 TBD\marginnote{\gls{bswap}}
@@ -2021,29 +2062,89 @@ TBD\marginnote{\gls{wbinvd}}
 
 TBD\marginnote{\gls{xadd}}
 
+\chapter{RSM}
+\label{ch:RSM}
+
+\begin{itemize}
+\item released 1993 (Intel)
+\end{itemize}
+
+TBD\marginnote{\gls{rsm}}
+
+\chapter{Processor with CPUID}
+\label{ch:CPUID}
+
+\begin{itemize}
+\item released 1993 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel Pentium (Intel)
+\item AMD~K5 (AMD)
+\end{itemize}
+
+TBD\marginnote{\gls{cpuid}}
+
+\chapter{CX8}
+\label{ch:CX8}
+
+\begin{itemize}
+\item released 1993 (Intel)
+\end{itemize}
+
+TBD\marginnote{\gls{cmpxchg8b}}
+
+\chapter{MSR}
+\label{ch:MSR}
+
+\begin{itemize}
+\item released 1993 (Intel)
+\end{itemize}
+
+TBD\marginnote{\gls{rdmsr}}
+
+TBD\marginnote{\gls{wrmsr}}
+
+\chapter{TSC}
+\label{ch:TSC}
+
+\begin{itemize}
+\item released 1993 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Invariant TSC
+\end{itemize}
+
+TBD\marginnote{\gls{rdtsc}}
+
+\chapter{PMC}
+\label{ch:PMC}
+
+\begin{itemize}
+\item released 1997 (Intel)
+\end{itemize}
+
+TBD\marginnote{\gls{rdpmc}}
+
+\chapter{MMX}
+\label{ch:MMX}
+
+\begin{itemize}
+\item released 1997 (Intel)
+\end{itemize}
+
 \chapter{Temp}
 
 This is a temporary chapter to help me organize this book.
 
 \begin{itemize}
 
-\item Intel Pentium (Intel) / AMD-K6 (AMD)
-
 \item CLFSH
-
-\item CX8 (CMPXCHG8B (AMD))
 
 \item CMPXCHG16B
 
 \item CMOV
-
-\item MSR
-
-\item TSC
-
-\begin{itemize}
-\item Invariant TSC
-\end{itemize}
 
 \item RDTSCP
 
