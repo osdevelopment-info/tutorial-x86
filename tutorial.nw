@@ -1330,6 +1330,300 @@
     description={Read performance-monitoring counters, introduced with \nameref{ch:PMC}}
 }
 
+\newglossaryentry{emms}{
+    type=ins,
+    name=\ttfamily{EMMS},
+    description={Empty MMX technology state, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{movd}{
+    type=ins,
+    name=\ttfamily{MOVD},
+    description={Move doubleword, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{movq}{
+    type=ins,
+    name=\ttfamily{MOVQ},
+    description={Move quadword, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{packssdw}{
+    type=ins,
+    name=\ttfamily{PACKSSDW},
+    description={Pack doublewords with signed saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{packsswb}{
+    type=ins,
+    name=\ttfamily{PACKSSWB},
+    description={Pack words with signed saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{packuswb}{
+    type=ins,
+    name=\ttfamily{PACKUSWB},
+    description={Pack words with unsigned saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{paddb}{
+    type=ins,
+    name=\ttfamily{PADDB},
+    description={Add packed byte integers, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{paddw}{
+    type=ins,
+    name=\ttfamily{PADDW},
+    description={Add packed word integers, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{paddd}{
+    type=ins,
+    name=\ttfamily{PADDD},
+    description={Add packed doubleword integers, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{paddq}{
+    type=ins,
+    name=\ttfamily{PADDQ},
+    description={Add packed quadword integers, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{paddsb}{
+    type=ins,
+    name=\ttfamily{PADDSB},
+    description={Add packed signed byte integers with signed saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{paddsw}{
+    type=ins,
+    name=\ttfamily{PADDSW},
+    description={Add packed signed word integers with signed saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{paddusb}{
+    type=ins,
+    name=\ttfamily{PADDUSB},
+    description={Add packed unsigned byte integers with unsigned saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{paddusw}{
+    type=ins,
+    name=\ttfamily{PADDUSW},
+    description={Add packed unsigned word integers with unsigned saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pand}{
+    type=ins,
+    name=\ttfamily{PAND},
+    description={Logical AND, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pandn}{
+    type=ins,
+    name=\ttfamily{PANDN},
+    description={Logical AND NOT, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pcmpeqb}{
+    type=ins,
+    name=\ttfamily{PCMPEQB},
+    description={Compare packed bytes for equal, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pcmpeqd}{
+    type=ins,
+    name=\ttfamily{PCMPEQD},
+    description={Compare packed doublewords for equal, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pcmpeqw}{
+    type=ins,
+    name=\ttfamily{PCMPEQW},
+    description={Compare packed words for equal, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pcmpgtb}{
+    type=ins,
+    name=\ttfamily{PCMPGTB},
+    description={Compare packed signed bytes for greater than, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pcmpgtd}{
+    type=ins,
+    name=\ttfamily{PCMPGTD},
+    description={Compare packed signed doublewords for greater than, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pcmpgtw}{
+    type=ins,
+    name=\ttfamily{PCMPGTW},
+    description={Compare packed signed words for greater than, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pmaddwd}{
+    type=ins,
+    name=\ttfamily{PMADDWD},
+    description={Multiply and add packed integers, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pmulhw}{
+    type=ins,
+    name=\ttfamily{PMULHW},
+    description={Multiply packed signed integers and store high result, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pmullw}{
+    type=ins,
+    name=\ttfamily{PMULLW},
+    description={Multiply packed signed integers and store low result, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{por}{
+    type=ins,
+    name=\ttfamily{POR},
+    description={Bitwise logical OR, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pslld}{
+    type=ins,
+    name=\ttfamily{PSLLD},
+    description={Shift packed doublewords left logical, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psllq}{
+    type=ins,
+    name=\ttfamily{PSLLQ},
+    description={Shift packed quadwords left logical, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psllw}{
+    type=ins,
+    name=\ttfamily{PSLLW},
+    description={Shift packed words left logical, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psrad}{
+    type=ins,
+    name=\ttfamily{PDRAD},
+    description={Shift packed doublewords right arithmetic, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psraq}{
+    type=ins,
+    name=\ttfamily{PDRAQ},
+    description={Shift packed quadwords right arithmetic, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psraw}{
+    type=ins,
+    name=\ttfamily{PDRAW},
+    description={Shift packed words right arithmetic, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psrld}{
+    type=ins,
+    name=\ttfamily{PDRLD},
+    description={Shift packed doublewords right logical, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psrlq}{
+    type=ins,
+    name=\ttfamily{PDRLQ},
+    description={Shift packed quadwords right logical, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psrlw}{
+    type=ins,
+    name=\ttfamily{PDRLW},
+    description={Shift packed words right logical, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psubb}{
+    type=ins,
+    name=\ttfamily{PSUBB},
+    description={Subtract packed byte integers, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psubd}{
+    type=ins,
+    name=\ttfamily{PSUBD},
+    description={Subtract packed doubleword integers, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psubw}{
+    type=ins,
+    name=\ttfamily{PSUBW},
+    description={Subtract packed word integers, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psubsb}{
+    type=ins,
+    name=\ttfamily{PSUBSB},
+    description={Subtract packed signed bytes with signed saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psubsw}{
+    type=ins,
+    name=\ttfamily{PSUBSW},
+    description={Subtract packed signed words with signed saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psubusb}{
+    type=ins,
+    name=\ttfamily{PSUBUSB},
+    description={Subtract packed unsigned bytes with unsigned saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{psubusw}{
+    type=ins,
+    name=\ttfamily{PSUBUSW},
+    description={Subtract packed unsigned words with unsigned saturation, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{punpckhbw}{
+    type=ins,
+    name=\ttfamily{PUNPCKHBW},
+    description={Unpack high bytes, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{punpckhwd}{
+    type=ins,
+    name=\ttfamily{PUNPCKHWD},
+    description={Unpack high words, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{punpckhdq}{
+    type=ins,
+    name=\ttfamily{PUNPCKHDQ},
+    description={Unpack high doublewords, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{punpcklbw}{
+    type=ins,
+    name=\ttfamily{PUNPCKLBW},
+    description={Unpack low bytes, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{punpcklwd}{
+    type=ins,
+    name=\ttfamily{PUNPCKLWD},
+    description={Unpack low words, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{punpckldq}{
+    type=ins,
+    name=\ttfamily{PUNPCKLDQ},
+    description={Unpack low doublewords, introduced with \nameref{ch:MMX}}
+}
+
+\newglossaryentry{pxor}{
+    type=ins,
+    name=\ttfamily{PXOR},
+    description={Logical exclusive OR, introduced with \nameref{ch:MMX}}
+}
+
 \begin{document}
 @
 
@@ -2134,6 +2428,104 @@ TBD\marginnote{\gls{rdpmc}}
 \item released 1997 (Intel)
 \end{itemize}
 
+TBD\marginnote{\gls{emms}}
+
+TBD\marginnote{\gls{movd}}
+
+TBD\marginnote{\gls{movq}}
+
+TBD\marginnote{\gls{packssdw}}
+
+TBD\marginnote{\gls{packsswb}}
+
+TBD\marginnote{\gls{packuswb}}
+
+TBD\marginnote{\gls{paddb}}
+
+TBD\marginnote{\gls{paddw}}
+
+TBD\marginnote{\gls{paddd}}
+
+TBD\marginnote{\gls{paddq}}
+
+TBD\marginnote{\gls{paddsb}}
+
+TBD\marginnote{\gls{paddsw}}
+
+TBD\marginnote{\gls{paddusb}}
+
+TBD\marginnote{\gls{paddusw}}
+
+TBD\marginnote{\gls{pand}}
+
+TBD\marginnote{\gls{pandn}}
+
+TBD\marginnote{\gls{pcmpeqb}}
+
+TBD\marginnote{\gls{pcmpeqw}}
+
+TBD\marginnote{\gls{pcmpeqd}}
+
+TBD\marginnote{\gls{pcmpgtb}}
+
+TBD\marginnote{\gls{pcmpgtw}}
+
+TBD\marginnote{\gls{pcmpgtd}}
+
+TBD\marginnote{\gls{pmaddwd}}
+
+TBD\marginnote{\gls{pmulhw}}
+
+TBD\marginnote{\gls{pmullw}}
+
+TBD\marginnote{\gls{por}}
+
+TBD\marginnote{\gls{psllw}}
+
+TBD\marginnote{\gls{pslld}}
+
+TBD\marginnote{\gls{psllq}}
+
+TBD\marginnote{\gls{psraw}}
+
+TBD\marginnote{\gls{psrad}}
+
+TBD\marginnote{\gls{psraq}}
+
+TBD\marginnote{\gls{psrlw}}
+
+TBD\marginnote{\gls{psrld}}
+
+TBD\marginnote{\gls{psrlq}}
+
+TBD\marginnote{\gls{psubb}}
+
+TBD\marginnote{\gls{psubw}}
+
+TBD\marginnote{\gls{psubd}}
+
+TBD\marginnote{\gls{psubsb}}
+
+TBD\marginnote{\gls{psubsw}}
+
+TBD\marginnote{\gls{psubusb}}
+
+TBD\marginnote{\gls{psubusw}}
+
+TBD\marginnote{\gls{punpckhbw}}
+
+TBD\marginnote{\gls{punpckhdq}}
+
+TBD\marginnote{\gls{punpckhwd}}
+
+TBD\marginnote{\gls{punpcklbw}}
+
+TBD\marginnote{\gls{punpckldq}}
+
+TBD\marginnote{\gls{punpcklwd}}
+
+TBD\marginnote{\gls{pxor}}
+
 \chapter{Temp}
 
 This is a temporary chapter to help me organize this book.
@@ -2151,8 +2543,6 @@ This is a temporary chapter to help me organize this book.
 \item SEP
 
 \item SYSCALL/SYSRET in 64-bit Mode
-
-\item MMX
 
 \item 3DNow (AMD)
 
