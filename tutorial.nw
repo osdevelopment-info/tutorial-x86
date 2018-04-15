@@ -41,6 +41,8 @@
 
 \setacronymstyle{long-short}
 
+\newacronym{bcd}{BCD}{Binary Coded Decimal}
+
 \newacronym{fpu}{FPU}{Floating Point Unit}
 
 \newglossaryentry{x86}{
@@ -51,6 +53,948 @@
 \newglossaryentry{x87}{
     name=x87,
     description={a mathematical coprocessor for the \gls{x86}}
+}
+
+\newglossaryentry{aaa}{
+    type=ins,
+    name=\ttfamily{AAA},
+    description={ASCII adjust AL after addition, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{aad}{
+    type=ins,
+    name=\ttfamily{AAD},
+    description={ASCII adjust AX before division, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{aam}{
+    type=ins,
+    name=\ttfamily{AAM},
+    description={ASCII adjust AX after multiplication, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{aas}{
+    type=ins,
+    name=\ttfamily{AAS},
+    description={ASCII adjust AL after subtraction, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{adc}{
+    type=ins,
+    name=\ttfamily{ADC},
+    description={Add with carry, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{add}{
+    type=ins,
+    name=\ttfamily{ADD},
+    description={Add, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{and}{
+    type=ins,
+    name=\ttfamily{AND},
+    description={Logical AND, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{call}{
+    type=ins,
+    name=\ttfamily{CALL},
+    description={Call procedure, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{cbw}{
+    type=ins,
+    name=\ttfamily{CBW},
+    description={Convert byte to word, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{clc}{
+    type=ins,
+    name=\ttfamily{CLC},
+    description={Clear carry flag, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{cld}{
+    type=ins,
+    name=\ttfamily{CLD},
+    description={Clear direction flag, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{cli}{
+    type=ins,
+    name=\ttfamily{CLI},
+    description={Clear interrupt flag, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{cmc}{
+    type=ins,
+    name=\ttfamily{CMC},
+    description={Complement carry flag, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{cmp}{
+    type=ins,
+    name=\ttfamily{CMP},
+    description={Compare two operands, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{cmps}{
+    type=ins,
+    name=\ttfamily{CMPS},
+    description={Compare string operands, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{cwd}{
+    type=ins,
+    name=\ttfamily{CWD},
+    description={Convert word to doubleword, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{daa}{
+    type=ins,
+    name=\ttfamily{DAA},
+    description={Decimal adjust AL after addition, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{das}{
+    type=ins,
+    name=\ttfamily{DAS},
+    description={Decimal adjust AL after subtraction, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{dec}{
+    type=ins,
+    name=\ttfamily{DEC},
+    description={Decrement by 1, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{div}{
+    type=ins,
+    name=\ttfamily{DIV},
+    description={Unsigned divide, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{hlt}{
+    type=ins,
+    name=\ttfamily{HLT},
+    description={Halt, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{idiv}{
+    type=ins,
+    name=\ttfamily{IDIV},
+    description={Signed divide, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{imul}{
+    type=ins,
+    name=\ttfamily{IMUL},
+    description={Signed multiply, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{in}{
+    type=ins,
+    name=\ttfamily{IN},
+    description={Input from port, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{inc}{
+    type=ins,
+    name=\ttfamily{INC},
+    description={Increment by 1, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{int}{
+    type=ins,
+    name=\ttfamily{INT},
+    description={Call to interrupt procedure, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{into}{
+    type=ins,
+    name=\ttfamily{INTO},
+    description={Call to interrupt procedure if overflow, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{iret}{
+    type=ins,
+    name=\ttfamily{IRET},
+    description={Interrupt return, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{jcc}{
+    type=ins,
+    name=\ttfamily{Jcc},
+    description={Jump if condition is met, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{jmp}{
+    type=ins,
+    name=\ttfamily{JMP},
+    description={Jump, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{lahf}{
+    type=ins,
+    name=\ttfamily{LAHF},
+    description={Load status flags into AH register, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{lds}{
+    type=ins,
+    name=\ttfamily{LDS},
+    description={Load DS with far pointer, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{lea}{
+    type=ins,
+    name=\ttfamily{LEA},
+    description={Load effective address, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{les}{
+    type=ins,
+    name=\ttfamily{LES},
+    description={Load ES with far pointer, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{lock}{
+    type=ins,
+    name=\ttfamily{LOCK},
+    description={Assert LOCK\# signal prefix, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{lods}{
+    type=ins,
+    name=\ttfamily{LODS},
+    description={Load string, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{loop}{
+    type=ins,
+    name=\ttfamily{LOOP/LOOPcc},
+    description={Loop according to (E/R)CX counter, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{mov}{
+    type=ins,
+    name=\ttfamily{MOV},
+    description={Move, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{movs}{
+    type=ins,
+    name=\ttfamily{MOVS},
+    description={Move data from string to string, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{mul}{
+    type=ins,
+    name=\ttfamily{MUL},
+    description={Unsigned multiply, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{neg}{
+    type=ins,
+    name=\ttfamily{NEG},
+    description={Two's complement negation, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{nop}{
+    type=ins,
+    name=\ttfamily{NOP},
+    description={No operation, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{not}{
+    type=ins,
+    name=\ttfamily{NOT},
+    description={One's complement negation, logical NOT, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{or}{
+    type=ins,
+    name=\ttfamily{OR},
+    description={Logical inclusive OR, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{out}{
+    type=ins,
+    name=\ttfamily{OUT},
+    description={Output to port, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{pop}{
+    type=ins,
+    name=\ttfamily{POP},
+    description={Pop a value from the stack, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{popf}{
+    type=ins,
+    name=\ttfamily{POPF},
+    description={Pop stack into FLAGS register, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{push}{
+    type=ins,
+    name=\ttfamily{PUSH},
+    description={Push data onto the stack, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{pushf}{
+    type=ins,
+    name=\ttfamily{PUSHF},
+    description={Push FLAGS register onto the stack, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{rcl}{
+    type=ins,
+    name=\ttfamily{RCL},
+    description={Rotate left through carry, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{rcr}{
+    type=ins,
+    name=\ttfamily{RCR},
+    description={Rotate right through carry, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{rep}{
+    type=ins,
+    name=\ttfamily{REPcc},
+    description={Repeat string operation prefix, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{ret}{
+    type=ins,
+    name=\ttfamily{RET},
+    description={Return from procedure, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{rol}{
+    type=ins,
+    name=\ttfamily{ROL},
+    description={Rotate left, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{ror}{
+    type=ins,
+    name=\ttfamily{ROR},
+    description={Rotate right, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{sahf}{
+    type=ins,
+    name=\ttfamily{SAHF},
+    description={Store AH into flags, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{sal}{
+    type=ins,
+    name=\ttfamily{SAL},
+    description={Shift arithmetically left, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{sar}{
+    type=ins,
+    name=\ttfamily{SAR},
+    description={Shift arithmetically right, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{sbb}{
+    type=ins,
+    name=\ttfamily{SBB},
+    description={Integer subtraction with borrow, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{scas}{
+    type=ins,
+    name=\ttfamily{SCAS},
+    description={Scan string, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{shl}{
+    type=ins,
+    name=\ttfamily{SHL},
+    description={Shift left, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{shr}{
+    type=ins,
+    name=\ttfamily{SHR},
+    description={Shift right, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{stc}{
+    type=ins,
+    name=\ttfamily{STC},
+    description={Set carry flag, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{std}{
+    type=ins,
+    name=\ttfamily{STD},
+    description={Set direction flag, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{sti}{
+    type=ins,
+    name=\ttfamily{STI},
+    description={Set interrupt flag, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{stos}{
+    type=ins,
+    name=\ttfamily{STOS},
+    description={Store string, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{sub}{
+    type=ins,
+    name=\ttfamily{SUB},
+    description={Subtract, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{test}{
+    type=ins,
+    name=\ttfamily{TEST},
+    description={Logical compare, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{wait}{
+    type=ins,
+    name=\ttfamily{WAIT},
+    description={Wait, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{xchg}{
+    type=ins,
+    name=\ttfamily{XCHG},
+    description={Exchange register/memory with register, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{xlat}{
+    type=ins,
+    name=\ttfamily{XLAT},
+    description={Table look-up translation, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{xor}{
+    type=ins,
+    name=\ttfamily{XOR},
+    description={Logical exclusive OR, introduced with \nameref{ch:8086}}
+}
+
+\newglossaryentry{f2xm1}{
+    type=ins,
+    name=\ttfamily{F2XM1},
+    description={Computer $2^{x}-1$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fabs}{
+    type=ins,
+    name=\ttfamily{FABS},
+    description={Absolute value, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fadd}{
+    type=ins,
+    name=\ttfamily{FADD},
+    description={Add, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{faddp}{
+    type=ins,
+    name=\ttfamily{FADDP},
+    description={Add and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fbld}{
+    type=ins,
+    name=\ttfamily{FBLD},
+    description={Load \gls{bcd}, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fbstp}{
+    type=ins,
+    name=\ttfamily{FBSTP},
+    description={Store \gls{bcd} integer and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fchs}{
+    type=ins,
+    name=\ttfamily{FCHS},
+    description={Change sign, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fclex}{
+    type=ins,
+    name=\ttfamily{FCLEX},
+    description={Clear exceptions, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fcom}{
+    type=ins,
+    name=\ttfamily{FCOM},
+    description={Compare floating point values, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fcomp}{
+    type=ins,
+    name=\ttfamily{FCOMP},
+    description={Compare floating point values and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fcompp}{
+    type=ins,
+    name=\ttfamily{FCOMPP},
+    description={Compare floating point values and pop twice, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fdecstp}{
+    type=ins,
+    name=\ttfamily{FDECSTP},
+    description={Decrement stack-top pointer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fdisi}{
+    type=ins,
+    name=\ttfamily{FDISI},
+    description={Disable interrupts, introduced with \nameref{ch:8087}, \gls{fnop} on other \glspl{fpu}}
+}
+
+\newglossaryentry{fdiv}{
+    type=ins,
+    name=\ttfamily{FDIV},
+    description={Divide, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fdivp}{
+    type=ins,
+    name=\ttfamily{FDIVP},
+    description={Divide and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fdivr}{
+    type=ins,
+    name=\ttfamily{FDIVR},
+    description={Reverse divide, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fdivrp}{
+    type=ins,
+    name=\ttfamily{FDIVRP},
+    description={Reverse divide and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{feni}{
+    type=ins,
+    name=\ttfamily{FENI},
+    description={Enable interrupts, introduced with \nameref{ch:8087}, \gls{fnop} on other \glspl{fpu}}
+}
+
+\newglossaryentry{ffree}{
+    type=ins,
+    name=\ttfamily{FFREE},
+    description={Free floating-pont register, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fiadd}{
+    type=ins,
+    name=\ttfamily{FIADD},
+    description={Add integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{ficom}{
+    type=ins,
+    name=\ttfamily{FICOM},
+    description={Compare integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{ficomp}{
+    type=ins,
+    name=\ttfamily{FICOMP},
+    description={Compare integer and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fidiv}{
+    type=ins,
+    name=\ttfamily{FIDIV},
+    description={Divide integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fidivr}{
+    type=ins,
+    name=\ttfamily{FIDIVR},
+    description={Reverse divide integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fild}{
+    type=ins,
+    name=\ttfamily{FILD},
+    description={Load integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fimul}{
+    type=ins,
+    name=\ttfamily{FIMUL},
+    description={Multiply integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fincstp}{
+    type=ins,
+    name=\ttfamily{FINCSTP},
+    description={Increment stack-top pointer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{finit}{
+    type=ins,
+    name=\ttfamily{FINIT},
+    description={Initialize floating point unit, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fist}{
+    type=ins,
+    name=\ttfamily{FIST},
+    description={Store integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fistp}{
+    type=ins,
+    name=\ttfamily{FISTP},
+    description={Store integer and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fisub}{
+    type=ins,
+    name=\ttfamily{FISUB},
+    description={Subtract integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fisubr}{
+    type=ins,
+    name=\ttfamily{FISUBR},
+    description={Reverse subtract integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fld}{
+    type=ins,
+    name=\ttfamily{FLD},
+    description={Load floating point value, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fld1}{
+    type=ins,
+    name=\ttfamily{FLD1},
+    description={Load constant $1.0$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fldcw}{
+    type=ins,
+    name=\ttfamily{FLDCW},
+    description={Load \gls{x87} \gls{fpu} control word, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fldenv}{
+    type=ins,
+    name=\ttfamily{FLDENV},
+    description={Load \gls{x87} \gls{fpu} environment, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fldl2e}{
+    type=ins,
+    name=\ttfamily{FLDL2E},
+    description={Load constant $log_2(e)$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fldl2t}{
+    type=ins,
+    name=\ttfamily{FLDL2T},
+    description={Load constant $log_2(10)$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fldlg2}{
+    type=ins,
+    name=\ttfamily{FLDLG2},
+    description={Load constant $log_10(2)$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fldln2}{
+    type=ins,
+    name=\ttfamily{FLDLN2},
+    description={Load constant $ln(2)$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fldpi}{
+    type=ins,
+    name=\ttfamily{FLDPI},
+    description={Load constant $\pi$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fldz}{
+    type=ins,
+    name=\ttfamily{FLDZ},
+    description={Load constant $0.0$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fmul}{
+    type=ins,
+    name=\ttfamily{FMUL},
+    description={Multiply, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fmulp}{
+    type=ins,
+    name=\ttfamily{FMULP},
+    description={Multiply and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fnclex}{
+    type=ins,
+    name=\ttfamily{FNCLEX},
+    description={Clear exceptions, no wait, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fndisi}{
+    type=ins,
+    name=\ttfamily{FNDISI},
+    description={Disable interrupts, no wait, introduced with \nameref{ch:8087}, \gls{fnop} on other \glspl{fpu}}
+}
+
+\newglossaryentry{fneni}{
+    type=ins,
+    name=\ttfamily{FNENI},
+    description={Enable interrupts, no wait, introduced with \nameref{ch:8087}, \gls{fnop} on other \glspl{fpu}}
+}
+
+\newglossaryentry{fninit}{
+    type=ins,
+    name=\ttfamily{FNINIT},
+    description={Initialize floating point unit, no wait, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fnop}{
+    type=ins,
+    name=\ttfamily{FNOP},
+    description={No operation, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fnsave}{
+    type=ins,
+    name=\ttfamily{FNSTCW},
+    description={Save \gls{x87} \gls{fpu} state, no wait, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fnstcw}{
+    type=ins,
+    name=\ttfamily{FNSTCW},
+    description={Store \gls{x87} \gls{fpu} control word, no wait, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fnstenv}{
+    type=ins,
+    name=\ttfamily{FNSTENV},
+    description={Store \gls{x87} \gls{fpu} environment, no wait, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fnstsw}{
+    type=ins,
+    name=\ttfamily{FNSTSW},
+    description={Store \gls{x87} \gls{fpu} status word, no wait, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fpatan}{
+    type=ins,
+    name=\ttfamily{FPATAN},
+    description={Partial arctangent, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fprem}{
+    type=ins,
+    name=\ttfamily{FPREM},
+    description={Partial remainder, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fptan}{
+    type=ins,
+    name=\ttfamily{FPTAN},
+    description={Partial tangent, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{frndint}{
+    type=ins,
+    name=\ttfamily{FRNDINT},
+    description={Round to integer, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{frstor}{
+    type=ins,
+    name=\ttfamily{FRSTOR},
+    description={Restore \gls{x87} \gls{fpu} state, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fsave}{
+    type=ins,
+    name=\ttfamily{FSAVE},
+    description={Save \gls{x87} \gls{fpu} state, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fscale}{
+    type=ins,
+    name=\ttfamily{FSCALE},
+    description={Scale, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fsqrt}{
+    type=ins,
+    name=\ttfamily{FSQRT},
+    description={Square root, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fst}{
+    type=ins,
+    name=\ttfamily{FST},
+    description={Store floating point value, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fstcw}{
+    type=ins,
+    name=\ttfamily{FSTCW},
+    description={Store \gls{x87} \gls{fpu} control word, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fstenv}{
+    type=ins,
+    name=\ttfamily{FSTENV},
+    description={Store \gls{x87} \gls{fpu} environment, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fstp}{
+    type=ins,
+    name=\ttfamily{FSTP},
+    description={Store floating point value and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fstsw}{
+    type=ins,
+    name=\ttfamily{FSTSW},
+    description={Store \gls{x87} \gls{fpu} status word, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fsub}{
+    type=ins,
+    name=\ttfamily{FSUB},
+    description={Subtract, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fsubp}{
+    type=ins,
+    name=\ttfamily{FSUBP},
+    description={Subtract and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fsubr}{
+    type=ins,
+    name=\ttfamily{FSUBR},
+    description={Reverse subtract, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fsubrp}{
+    type=ins,
+    name=\ttfamily{FSUBRP},
+    description={Reverse subtract and pop, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{ftst}{
+    type=ins,
+    name=\ttfamily{FTST},
+    description={Test, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fwait}{
+    type=ins,
+    name=\ttfamily{FWAIT},
+    description={Wait (opcode synonym for \gls{wait}), introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fxam}{
+    type=ins,
+    name=\ttfamily{FXAM},
+    description={Examine floating-point, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fxch}{
+    type=ins,
+    name=\ttfamily{FXCH},
+    description={Exchange register contents, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fxtract}{
+    type=ins,
+    name=\ttfamily{FXTRACT},
+    description={Extract exponent and significand, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fyl2x}{
+    type=ins,
+    name=\ttfamily{FYL2X},
+    description={Compute $y * log_{2}x$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fyl2xp1}{
+    type=ins,
+    name=\ttfamily{FYL2XP1},
+    description={Compute $ y * log_2(x+1)$, introduced with \nameref{ch:8087}}
+}
+
+\newglossaryentry{fsetpm}{
+    type=ins,
+    name=\ttfamily{FSETPM},
+    description={Set protected mode, introduced with \nameref{ch:80286/287}, \gls{fnop} on other \glspl{fpu}}
+}
+
+\newglossaryentry{fcos}{
+    type=ins,
+    name=\ttfamily{FCOS},
+    description={Cosine, introduced with \nameref{ch:80386/387}}
+}
+
+\newglossaryentry{fprem1}{
+    type=ins,
+    name=\ttfamily{FPREM1},
+    description={Partial remainder (IEEE), introduced with \nameref{ch:80386/387}}
+}
+
+\newglossaryentry{fsin}{
+    type=ins,
+    name=\ttfamily{FSIN},
+    description={Sine, introduced with \nameref{ch:80386/387}}
+}
+
+\newglossaryentry{fsincos}{
+    type=ins,
+    name=\ttfamily{FSINCOS},
+    description={Sine and cosine, introduced with \nameref{ch:80386/387}}
+}
+
+\newglossaryentry{fucom}{
+    type=ins,
+    name=\ttfamily{FUCOM},
+    description={Unordered compare floating point values, introduced with \nameref{ch:80386/387}}
+}
+
+\newglossaryentry{fucomp}{
+    type=ins,
+    name=\ttfamily{FUCOMP},
+    description={Unordered compare floating point values and pop, introduced with \nameref{ch:80386/387}}
+}
+
+\newglossaryentry{fucompp}{
+    type=ins,
+    name=\ttfamily{FUCOMPP},
+    description={Unordered compare floating point values and pop twice, introduced with \nameref{ch:80386/387}}
 }
 
 \begin{document}
@@ -100,34 +1044,361 @@ processors can be easier understand if you have the history in mind.
 
 \section{Introduction}
 
+\section{Special Commands}
+
+TBD\marginnote{\gls{hlt}}
+
+TBD\marginnote{\gls{lock}}
+
+TBD\marginnote{\gls{nop}}
+
+TBD\marginnote{\gls{wait}}
+
 \section{Moving Data Around}
+
+TBD\marginnote{\gls{cbw}}
+
+TBD\marginnote{\gls{cwd}}
+
+TBD\marginnote{\gls{lahf}}
+
+TBD\marginnote{\gls{mov}}
+
+TBD\marginnote{\gls{sahf}}
+
+TBD\marginnote{\gls{xchg}}
 
 \section{Doing Arithmetic}
 
+TBD\marginnote{\gls{aaa}}
+
+TBD\marginnote{\gls{aad}}
+
+TBD\marginnote{\gls{aam}}
+
+TBD\marginnote{\gls{aas}}
+
+TBD\marginnote{\gls{adc}}
+
+TBD\marginnote{\gls{add}}
+
+TBD\marginnote{\gls{daa}}
+
+TBD\marginnote{\gls{das}}
+
+TBD\marginnote{\gls{dec}}
+
+TBD\marginnote{\gls{div}}
+
+TBD\marginnote{\gls{idiv}}
+
+TBD\marginnote{\gls{imul}}
+
+TBD\marginnote{\gls{inc}}
+
+TBD\marginnote{\gls{mul}}
+
+TBD\marginnote{\gls{neg}}
+
+TBD\marginnote{\gls{sbb}}
+
+TBD\marginnote{\gls{sub}}
+
+TBD\marginnote{\gls{xchg}}
+
 \section{Doing Boolean Arithmetic}
+
+TBD\marginnote{\gls{and}}
+
+TBD\marginnote{\gls{not}}
+
+TBD\marginnote{\gls{or}}
+
+TBD\marginnote{\gls{xor}}
 
 \section{Shifting and Rotating}
 
+TBD\marginnote{\gls{rcl}}
+
+TBD\marginnote{\gls{rcr}}
+
+TBD\marginnote{\gls{rol}}
+
+TBD\marginnote{\gls{ror}}
+
+TBD\marginnote{\gls{sal}}
+
+TBD\marginnote{\gls{sar}}
+
+TBD\marginnote{\gls{shl}}
+
+TBD\marginnote{\gls{shr}}
+
 \section{Accessing Memory}
 
-\section{Working with Conditions}
+TBD\marginnote{\gls{lds}}
+
+TBD\marginnote{\gls{lea}}
+
+TBD\marginnote{\gls{les}}
+
+TBD\marginnote{\gls{lods}}
+
+TBD\marginnote{\gls{mov}}
+
+TBD\marginnote{\gls{movs}}
+
+TBD\marginnote{\gls{scas}}
+
+TBD\marginnote{\gls{stos}}
+
+TBD\marginnote{\gls{xchg}}
+
+TBD\marginnote{\gls{xlat}}
+
+\section{Conditions and Control Flow}
+
+TBD\marginnote{\gls{clc}}
+
+TBD\marginnote{\gls{cld}}
+
+TBD\marginnote{\gls{cmc}}
+
+TBD\marginnote{\gls{cmp}}
+
+TBD\marginnote{\gls{cmps}}
+
+TBD\marginnote{\gls{jcc}}
+
+TBD\marginnote{\gls{jmp}}
+
+TBD\marginnote{\gls{loop}}
+
+TBD\marginnote{\gls{rep}}
+
+TBD\marginnote{\gls{stc}}
+
+TBD\marginnote{\gls{std}}
+
+TBD\marginnote{\gls{test}}
 
 \section{Using Subroutines}
 
+TBD\marginnote{\gls{call}}
+
+TBD\marginnote{\gls{pop}}
+
+TBD\marginnote{\gls{popf}}
+
+TBD\marginnote{\gls{push}}
+
+TBD\marginnote{\gls{pushf}}
+
+TBD\marginnote{\gls{ret}}
+
 \section{Interrupting Work and Using System Subroutines}
+
+TBD\marginnote{\gls{cli}}
+
+TBD\marginnote{\gls{int}}
+
+TBD\marginnote{\gls{into}}
+
+TBD\marginnote{\gls{iret}}
+
+TBD\marginnote{\gls{sti}}
 
 \section{Communicating with Periphery}
 
+TBD\marginnote{\gls{in}}
+
+TBD\marginnote{\gls{out}}
+
 \chapter{8087}
 \label{ch:8087}
+
+TBD\marginnote{\gls{f2xm1}}
+
+TBD\marginnote{\gls{fabs}}
+
+TBD\marginnote{\gls{fadd}}
+
+TBD\marginnote{\gls{faddp}}
+
+TBD\marginnote{\gls{fbld}}
+
+TBD\marginnote{\gls{fbstp}}
+
+TBD\marginnote{\gls{fchs}}
+
+TBD\marginnote{\gls{fclex}}
+
+TBD\marginnote{\gls{fcom}}
+
+TBD\marginnote{\gls{fcomp}}
+
+TBD\marginnote{\gls{fcompp}}
+
+TBD\marginnote{\gls{fdecstp}}
+
+TBD\marginnote{\gls{fdisi}}
+
+TBD\marginnote{\gls{fdiv}}
+
+TBD\marginnote{\gls{fdivp}}
+
+TBD\marginnote{\gls{fdivr}}
+
+TBD\marginnote{\gls{fdivrp}}
+
+TBD\marginnote{\gls{feni}}
+
+TBD\marginnote{\gls{ffree}}
+
+TBD\marginnote{\gls{fiadd}}
+
+TBD\marginnote{\gls{ficom}}
+
+TBD\marginnote{\gls{ficomp}}
+
+TBD\marginnote{\gls{fidiv}}
+
+TBD\marginnote{\gls{fidivr}}
+
+TBD\marginnote{\gls{fild}}
+
+TBD\marginnote{\gls{fimul}}
+
+TBD\marginnote{\gls{fincstp}}
+
+TBD\marginnote{\gls{finit}}
+
+TBD\marginnote{\gls{fist}}
+
+TBD\marginnote{\gls{fistp}}
+
+TBD\marginnote{\gls{fisub}}
+
+TBD\marginnote{\gls{fisubr}}
+
+TBD\marginnote{\gls{fld}}
+
+TBD\marginnote{\gls{fld1}}
+
+TBD\marginnote{\gls{fldcw}}
+
+TBD\marginnote{\gls{fldenv}}
+
+TBD\marginnote{\gls{fldl2e}}
+
+TBD\marginnote{\gls{fldl2t}}
+
+TBD\marginnote{\gls{fldlg2}}
+
+TBD\marginnote{\gls{fldln2}}
+
+TBD\marginnote{\gls{fldpi}}
+
+TBD\marginnote{\gls{fldz}}
+
+TBD\marginnote{\gls{fmul}}
+
+TBD\marginnote{\gls{fmulp}}
+
+TBD\marginnote{\gls{fnclex}}
+
+TBD\marginnote{\gls{fndisi}}
+
+TBD\marginnote{\gls{fneni}}
+
+TBD\marginnote{\gls{fninit}}
+
+TBD\marginnote{\gls{fnop}}
+
+TBD\marginnote{\gls{fnsave}}
+
+TBD\marginnote{\gls{fnstcw}}
+
+TBD\marginnote{\gls{fnstenv}}
+
+TBD\marginnote{\gls{fnstsw}}
+
+TBD\marginnote{\gls{fpatan}}
+
+TBD\marginnote{\gls{fprem}}
+
+TBD\marginnote{\gls{fptan}}
+
+TBD\marginnote{\gls{frndint}}
+
+TBD\marginnote{\gls{frstor}}
+
+TBD\marginnote{\gls{fsave}}
+
+TBD\marginnote{\gls{fscale}}
+
+TBD\marginnote{\gls{fst}}
+
+TBD\marginnote{\gls{fstcw}}
+
+TBD\marginnote{\gls{fstenv}}
+
+TBD\marginnote{\gls{fstp}}
+
+TBD\marginnote{\gls{fstsw}}
+
+TBD\marginnote{\gls{fsub}}
+
+TBD\marginnote{\gls{fsubp}}
+
+TBD\marginnote{\gls{fsubr}}
+
+TBD\marginnote{\gls{fsubp}}
+
+TBD\marginnote{\gls{ftst}}
+
+TBD\marginnote{\gls{fwait}}
+
+TBD\marginnote{\gls{fxam}}
+
+TBD\marginnote{\gls{fxch}}
+
+TBD\marginnote{\gls{fxtract}}
+
+TBD\marginnote{\gls{fyl2x}}
+
+TBD\marginnote{\gls{fyl2xp1}}
+
+\chapter{80186}
+\label{ch:80186}
+
+\chapter{80286/287}
+\label{ch:80286/287}
+
+TBD\marginnote{\gls{fsetpm}}
+
+\chapter{80386/387}
+\label{ch:80386/387}
+
+TBD\marginnote{\gls{fcos}}
+
+TBD\marginnote{\gls{fprem1}}
+
+TBD\marginnote{\gls{fsin}}
+
+TBD\marginnote{\gls{fsincos}}
+
+TBD\marginnote{\gls{fucom}}
+
+TBD\marginnote{\gls{fucomp}}
+
+TBD\marginnote{\gls{fucompp}}
 
 \chapter{Temp}
 
 This is a temporary chapter to help me organize this book.
 
 \begin{itemize}
-
-\item 286/287 (Intel) / Am286 (AMD)
 
 \item Intel386/387 (Intel) / Am386 (AMD)
 
