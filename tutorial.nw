@@ -41,9 +41,11 @@
 
 \setacronymstyle{long-short}
 
-\newacronym{bcd}{BCD}{Binary Coded Decimal}
+\newacronym{bcd}{BCD}{binary coded decimal}
 
-\newacronym{fpu}{FPU}{Floating Point Unit}
+\newacronym{fpu}{FPU}{floating point unit}
+
+\newacronym{tlb}{TLB}{translation lookaside buffer}
 
 \newglossaryentry{x86}{
     name=x86,
@@ -1250,6 +1252,42 @@
     description={Unordered compare floating point values and pop twice, introduced with \nameref{ch:80387}}
 }
 
+\newglossaryentry{bswap}{
+    type=ins,
+    name=\ttfamily{BSWAP},
+    description={Byte swap, introduced with \nameref{ch:80486}}
+}
+
+\newglossaryentry{cmpxchg}{
+    type=ins,
+    name=\ttfamily{CMPXCHG},
+    description={Compare and exchange, introduced with \nameref{ch:80486}}
+}
+
+\newglossaryentry{invd}{
+    type=ins,
+    name=\ttfamily{INVD},
+    description={Invalidate internal caches, introduced with \nameref{ch:80486}}
+}
+
+\newglossaryentry{invlpg}{
+    type=ins,
+    name=\ttfamily{INVLPG},
+    description={Invalidate \gls{tlb} entries, introduced with \nameref{ch:80486}}
+}
+
+\newglossaryentry{wbinvd}{
+    type=ins,
+    name=\ttfamily{WBINVD},
+    description={Write back and invalidate cache, introduced with \nameref{ch:80486}}
+}
+
+\newglossaryentry{xadd}{
+    type=ins,
+    name=\ttfamily{XADD},
+    description={Exchange and add, introduced with \nameref{ch:80486}}
+}
+
 \begin{document}
 @
 
@@ -1296,6 +1334,17 @@ processors can be easier understand if you have the history in mind.
 \label{ch:8086}
 
 \section{Introduction}
+
+\begin{itemize}
+\item released 1978 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel~8086
+\item Intel~8088
+\item AMD~8086
+\item AMD~8088
+\end{itemize}
 
 \section{Special Commands}
 
@@ -1470,6 +1519,14 @@ TBD\marginnote{\gls{out}}
 \chapter{8087}
 \label{ch:8087}
 
+\begin{itemize}
+\item released 1980 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel~8087
+\end{itemize}
+
 TBD\marginnote{\gls{f2xm1}}
 
 TBD\marginnote{\gls{fabs}}
@@ -1625,6 +1682,14 @@ TBD\marginnote{\gls{fyl2xp1}}
 \chapter{80186}
 \label{ch:80186}
 
+\begin{itemize}
+\item released 1982 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel~80186
+\end{itemize}
+
 TBD\marginnote{\gls{bound}}
 
 TBD\marginnote{\gls{enter}}
@@ -1659,8 +1724,29 @@ TBD (immediate)\marginnote{\gls{rcl}}
 
 TBD (immediate)\marginnote{\gls{rcr}}
 
+\chapter{80187}
+\label{ch:80187}
+
+\begin{itemize}
+\item released ??? (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel~80187 (8087 interface/80387 core)
+\end{itemize}
+
 \chapter{80286}
 \label{ch:80286}
+
+\begin{itemize}
+\item released 1982 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel~80286
+\item i286 (Intel)
+\item Am286 (AMD)
+\end{itemize}
 
 TBD\marginnote{\gls{arpl}}
 
@@ -1697,10 +1783,29 @@ TBD\marginnote{\gls{verw}}
 \chapter{80287}
 \label{ch:80287}
 
+\begin{itemize}
+\item released ??? (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel~80287
+\item i287 (Intel)
+\end{itemize}
+
 TBD\marginnote{\gls{fsetpm}}
 
 \chapter{80386}
 \label{ch:80386}
+
+\begin{itemize}
+\item released 1985 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel~80386
+\item i386 (Intel)
+\item Am386 (AMD)
+\end{itemize}
 
 TBD (extend)\marginnote{\gls{adc}}
 
@@ -1853,6 +1958,15 @@ TBD (extend)\marginnote{\gls{xor}}
 \chapter{80387}
 \label{ch:80387}
 
+\begin{itemize}
+\item released 1987 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item Intel~80387
+\item i387 (Intel)
+\end{itemize}
+
 TBD\marginnote{\gls{fcos}}
 
 TBD (extend)\marginnote{\gls{fnsave}}
@@ -1881,13 +1995,37 @@ TBD\marginnote{\gls{fucomp}}
 
 TBD\marginnote{\gls{fucompp}}
 
+\chapter{80486}
+\label{ch:80486}
+
+\begin{itemize}
+\item released 1989 (Intel)
+\end{itemize}
+
+\begin{itemize}
+\item i486 (Intel)
+\item Am486 (AMD)
+\item Am5x86 (AMD)
+\item AMD~K5
+\end{itemize}
+
+TBD\marginnote{\gls{bswap}}
+
+TBD\marginnote{\gls{cmpxchg}}
+
+TBD\marginnote{\gls{invd}}
+
+TBD\marginnote{\gls{invlpg}}
+
+TBD\marginnote{\gls{wbinvd}}
+
+TBD\marginnote{\gls{xadd}}
+
 \chapter{Temp}
 
 This is a temporary chapter to help me organize this book.
 
 \begin{itemize}
-
-\item Intel486 (Intel) / Am486/Am5x86/AMD-K5 (AMD)
 
 \item Intel Pentium (Intel) / AMD-K6 (AMD)
 
