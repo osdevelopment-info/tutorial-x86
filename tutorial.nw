@@ -1673,6 +1673,21 @@ as it does not influence the software run on the processor.
 
 \section{Environment}
 
+\begin{itemize}
+\item qemu-system-i386 -s -S -drive format=raw,file=bootloader,if=floppy
+\item gdbtui
+\end{itemize}
+
+\begin{verbatim}
+break *0x7c00
+set disassembly-flavor intel
+set disassemble-next-line on
+set architecture i8086
+layout asm
+layout regs
+target remote localhost:1234
+\end{verbatim}
+
 \chapter{8086}
 \label{ch:8086}
 \index{8086}
