@@ -3,9 +3,9 @@
 \usepackage{fancyvrb}
 \usepackage{noweb}
 \usepackage{xcolor}
+\usepackage{imakeidx}
 \usepackage[breaklinks]{hyperref}
 \usepackage{marginnote}
-\usepackage{makeidx}
 \usepackage[acronym,toc,numberedsection=autolabel,nopostdot]{glossaries}
 \usepackage[numindex,nottoc,notbib]{tocbibind}
 
@@ -34,6 +34,8 @@
 \setkomafont{labelinglabel}{\ttfamily}
 
 \makeindex
+
+\makeindex[name=ins,title={Instruction Index},intoc=true]
 
 \newglossary*{ins}{x86-Instructions}
 
@@ -1653,21 +1655,27 @@ helpful to understand the architecture more in depth or even develop some parts 
 because you either want to tune the performance or to reduce the space needed.
 
 In this book I will go through the assembly language instructions found in modern \gls{x86} processors. I will start
-with the 8086 assembly language in chapter \ref{ch:8086} and go on to the 8087 assembly language in chapter
-\ref{ch:8087}, which is the first \gls{x87} \gls{fpu}.
+with the \nameref{ch:8086} assembly language in chapter \ref{ch:8086} and go on to the \nameref{ch:8087} assembly
+language extensions in chapter \ref{ch:8087}, which is the first \gls{x87} \gls{fpu}.
 
-Further on I will visit the other CPUs like the 80286, 80386, i486 and Pentium. After that I will not go on with
-different processors but with features because potentially each processor may implement a different set of features and
-because a feature is introduced in a certain processor does not mean that every successing processor also has this
-feature.
+Further on I will visit the other CPUs in historical order. We go on with the \nameref{ch:80286} in chapter
+\ref{ch:80286}, the \nameref{ch:80386} in chapter \ref{ch:80386} and the \nameref{ch:80486} in chapter \ref{ch:80486}.
 
-I start with the 8086 and go on through all other successing processors because some of the idiosyncrasies of the modern
-processors can be easier understand if you have the history in mind.
+After that I will not go on with different processors but with features. This starts with the chapter \nameref{ch:CPUID}
+which is the first feature I'll discuss. This is the base for all other features because with the \gls{cpuid} you can
+determine all other features. This is because not every processor implements all features.
+
+I start with the \nameref{ch:8086} and go on through all other successing processors because some of the idiosyncrasies
+of the modern processors can be easier understand if you have the history in mind.
+
+I will look at the processors from the softwares view. If there are differences in the hardware I do not concern as long
+as it does not influence the software run on the processor.
 
 \section{Environment}
 
 \chapter{8086}
 \label{ch:8086}
+\index{8086}
 
 \section{Introduction}
 
@@ -1685,6 +1693,7 @@ processors can be easier understand if you have the history in mind.
 \section{Special Commands}
 
 TBD\marginnote{\gls{hlt}}
+\index[ins]{HLT}
 
 TBD\marginnote{\gls{lock}}
 
@@ -2765,8 +2774,6 @@ This is a temporary chapter to help me organize this book.
 \end{itemize}
 
 \appendix
-
-\printindex
 
 \printglossary
 
@@ -3941,6 +3948,10 @@ This is a code chunk to be included by the generated asm files.
 ;   You should have received a copy of the GNU General Public License
 ;   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @
+
+\printindex
+
+\printindex[ins]
 
 @
 \end{document}
