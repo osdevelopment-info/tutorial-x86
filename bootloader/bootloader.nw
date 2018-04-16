@@ -154,7 +154,7 @@ BP & xxxx & content unknown \\ \hline
 SP & 0xfffe & TOS \\ \hline
 IP & 0x8001 & first byte of the executable code loaded \\ \hline
 CS & 0x0000 & code segment base \\ \hline
-SS & 0x1000 & stack segment base \\ \hline
+SS & 0x2000 & stack segment base \\ \hline
 DS & xxxx & unknown content \\ \hline
 ES & xxxx & unknown content \\ \hline
 \end{tabular}
@@ -225,7 +225,7 @@ enoughMem:
 Next we will setup the stack that we can use also during the load process.
 
 <<bootloader.asm>>=
-     mov       AX,0x1000
+     mov       AX,0x2000
      mov       SS,AX
      mov       SP,0xfffe
 @
@@ -440,8 +440,8 @@ the bootloader to form a floppy disk image.
 section .text
 org 0x8000
      db             0x00
+     cli
      hlt
-     times 512-($-$$) nop
 @
 
 \appendix

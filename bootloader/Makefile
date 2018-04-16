@@ -4,8 +4,8 @@ NASM_OPTS = -f bin
 all: floppy pdf
 
 floppy: bootloader dummypayload
-	dd if=/dev/zero of=image bs=512 count=2878
-	cat bootloader dummypayload image > floppy
+	cat bootloader dummypayload > floppy
+	./sectorfill.sh floppy
 
 bootloader.asm: bootloader.nw
 	notangle -Rbootloader.asm bootloader.nw > bootloader.asm
@@ -29,7 +29,7 @@ pdf: bootloader.nw
 	xelatex -8bit bootloader
 
 clean:
-	rm -f dummypayload image floppy
+	rm -f dummypayload floppy
 	rm -f *~
 	rm -f *.acn
 	rm -f *.acr
