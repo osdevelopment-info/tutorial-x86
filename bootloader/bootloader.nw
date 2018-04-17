@@ -41,6 +41,8 @@
 
 \setacronymstyle{long-short}
 
+\newacronym{tos}{TOS}{Top of stack}
+
 \newglossaryentry{C/H/S}{
     name=C/H/S,
     description={Short for Cylinder/Head/Sector, used for addressing sectors at floppy disks or hard disks}
@@ -131,9 +133,8 @@ bootloader.
 \begin{tabular}{|r|r|r|l|}
 \hline
 start & end & size & meaning \\ \hline
-0x08000 & 0x08000 & 1 & number of sectors to read after the first sector loaded \\ \hline
-0x08001 & 0x0ffff & 32~KiB~-~1 & loaded code \\ \hline
-0x10000 & 0x1ffff & 64~KiB & stack for loaded code \\ \hline
+0x08000 & 0x0ffff & 32~KiB & loaded code \\ \hline
+0x40000 & 0x4ffff & 64~KiB & stack for loaded code \\ \hline
 \end{tabular}
 
 \section{Loaded Code Layout}
@@ -151,10 +152,10 @@ DX & xxxx & content unknown \\ \hline
 SI & xxxx & content unknown \\ \hline
 DI & xxxx & content unknown \\ \hline
 BP & xxxx & content unknown \\ \hline
-SP & 0xfffe & TOS \\ \hline
-IP & 0x8001 & first byte of the executable code loaded \\ \hline
+SP & 0xfffe & \gls{tos} \\ \hline
+IP & 0x8000 & first byte of the executable code loaded \\ \hline
 CS & 0x0000 & code segment base \\ \hline
-SS & 0x2000 & stack segment base \\ \hline
+SS & 0x4000 & stack segment base \\ \hline
 DS & xxxx & unknown content \\ \hline
 ES & xxxx & unknown content \\ \hline
 \end{tabular}
@@ -207,15 +208,20 @@ address & adr. rel. to SI & size & content \\ \hline
      push      CS
      pop       DS
      mov       SI,0x0500
+@
+
+We can now save the boot drive into our data area.
+
+<<bootloader.asm>>=
      mov       [SI],DL
 @
 
-Next we determine the amount of lower memory we have which sould be at least 128~KiB. Else we jump to an error handler
+Next we determine the amount of lower memory we have which sould be at least 384~KiB. Else we jump to an error handler
 with \verb|AL| set to 1 (as error code).
 
 <<bootloader.asm>>=
      int       0x12
-     cmp       AX,128
+     cmp       AX,384
      ja        enoughMem
      mov       AL,0x01
      jmp       error
@@ -225,7 +231,7 @@ enoughMem:
 Next we will setup the stack that we can use also during the load process.
 
 <<bootloader.asm>>=
-     mov       AX,0x2000
+     mov       AX,0x4000
      mov       SS,AX
      mov       SP,0xfffe
 @
@@ -256,74 +262,60 @@ geometryread:
      mov       [SI+0x02],AX
 @
 
-Next we read in the first sector after the boot sector from the first floppy disk. This sector is located at 0/0/2
-(\gls{C/H/S}). The registers contain the following values for the call of \verb|int 0x13|. The final value of the
-cylinders is first placed into \verb|CX| and then moved to \verb|CH|. This only works if we assume that the cyclinder
-number is not above 255.
-
-\vspace{1ex}
-\begin{tabular}{|l|r|l|}
-\hline
-Register & Value & Meaning \\ \hline
-AH & 2 & function number to interrupt (read sectors) \\ \hline
-AL & 1 & number of sectors to read \\ \hline
-CH & 0 & cylinder number \\ \hline
-CL & 2 & sector number \\ \hline
-DH & 0 & head number \\ \hline
-DL & [SI] & drive number (previously saved) \\ \hline
-ES & 0x0000 & segment of the data buffer \\ \hline
-BX & [SI+0x0a] & the address of the data buffer \\ \hline
-\end{tabular}
+We will now set the address where the sectors should be saved to.
 
 <<bootloader.asm>>=
-     push      CS
-     pop       ES
-     mov       AX,0x0201
-     mov       CX,0x0000
-     mov       [SI+0x08],CX
-     mov       CL,0x02
-     mov       [SI+0x07],CL
-     mov       DH,0x00
-     mov       [SI+0x0c],DH
-     mov       DL,[SI]
      mov       BX,0x8000
-     int       0x13
-     jnc       firstreadsuccess
-     mov       AL,0x03
-     jmp       error
-firstreadsuccess:
-@
-
-After we read the sector we increment the address where the next sector will be read into by 512 and store it.
-
-<<bootloader.asm>>=
-     add       BX,512
      mov       [SI+0x0a],BX
 @
 
-Now we check how many sectors we still have to read (from \verb|0x8000|) and save this to \verb|0x0505|. Also we set the
-value of \verb|0x0506| to 0 because that is the sector we just read.
+We now also set up our memory area with the values needed. First we read the number of sectors that we have to read and
+save this into \verb|0x0505|. This value is expected at the location \verb|0x7dfd| which is 3~bytes from the end of the
+boot sector that is just read.
 
 <<bootloader.asm>>=
-     mov       AL,[0x8000]
+     mov       AL,[0x7dfd]
      mov       [SI+0x05],AL
-     mov       AL,0x0000
+@
+
+Next we set the number of sectors read so far after the boot sector (which is still 0).
+
+<<bootloader.asm>>=
+     mov       AL,0x00
      mov       [SI+0x06],AL
 @
 
-Next we check if there are still sectors to read else we end the sector read.
+Now we save the values of the already read sectors (which is only the boot sector).
+
+<<bootloader.asm>>=
+     mov       AX,0x0000
+     mov       [SI+0x08],AX
+     mov       AL,0x01
+     mov       [SI+0x07],AL
+     mov       AL,0x00
+     mov       [SI+0x0c],AL
+@
+
+Now we can check if we still have to read in sectors. If not and we are done we will jump to the end of the boot sector.
 
 <<bootloader.asm>>=
 checknextsect:
      mov       AH,[SI+0x05]
      mov       AL,[SI+0x06]
      cmp       AH,AL
-     ja        nextsectread
+     ja        readsect
      jmp       sectreaddone
+readsect:
 @
 
-So here we know that we have to read (at least) one more sector. So we load all data needed into the registers as
-followed
+We now increment the sector that we will read now and save this to the memory for later use.
+<<bootloader.asm>>=
+     inc       AL
+     mov       [SI+0x06],AL
+@
+
+Next we read in the values of the last sector read and calculate the next sector from this. For this we will read in the
+data as followed
 
 \vspace{1ex}
 \begin{tabular}{|l|l|}
@@ -335,7 +327,6 @@ CH & last head read \\ \hline
 \end{tabular}
 
 <<bootloader.asm>>=
-nextsectread:
      mov       BX,[SI+0x08]
      mov       CL,[SI+0x07]
      mov       CH,[SI+0x0c]
@@ -384,21 +375,27 @@ cyloverflow:
      jmp       error
 @
 
-Now that we have calculated the next sector to read we will read it from the floppy disk.
+Now that we have calculated the next sector to read we save this values for the next iteration and we will read it from
+the floppy disk.
 
 <<bootloader.asm>>=
 readsector:
+     mov       [SI+0x08],BX
+     mov       [SI+0x07],CL
+     mov       [SI+0x0c],CH
+     mov       DH,CH
      mov       DL,CL
-     mov       AX,CX
+     mov       AX,BX
      xchg      AH,AL
      mov       CL,6
      shl       AL,CL
      mov       CX,AX
      or        CL,DL
-     mov       DH,CH
      mov       AX,0x0201
      mov       DL,[SI]
      mov       BX,[SI+0x0a]
+     push      CS
+     pop       ES
      int       0x13
      jnc       readsuccess
      mov       AL,0x04
@@ -418,15 +415,17 @@ Now we add an error handling which simply halts at the moment.
 
 <<bootloader.asm>>=
 error:
+     cli
      hlt
 @
 
-Now we add the jump to the loaded code and the magic bytes and the bootloader is done.
+Now we add the jump to the loaded code and the magic bytes and then the bootloader is done.
 
 <<bootloader.asm>>=
 sectreaddone:
-     jmp       0x8001
-     times 510-($-$$) nop
+     jmp       0x8000
+     times 509-($-$$) nop
+     db 0x00
      db 0x55,0xaa
 @
 
@@ -439,7 +438,6 @@ the bootloader to form a floppy disk image.
 <<preamble>>
 section .text
 org 0x8000
-     db             0x00
      cli
      hlt
 @
