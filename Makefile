@@ -7,8 +7,9 @@ pdf: tutorial.nw
 	nodefs tutorial.nw | sort -u > tutorial.defs
 	noweave -indexfrom tutorial.defs -delay tutorial.nw > tutorial.tex
 	xelatex -8bit tutorial
-	makeindex -o tutorial.ind tutorial.idx
-	makeindex -o ins.ind ins.idx
+	#makeindex -o tutorial.ind tutorial.idx
+	#makeindex -o ins.ind ins.idx
+	splitindex tutorial.idx
 	makeglossaries tutorial
 	xelatex -8bit tutorial
 	xelatex -8bit tutorial
