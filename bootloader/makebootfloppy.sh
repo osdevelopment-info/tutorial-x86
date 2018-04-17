@@ -9,6 +9,10 @@ fi
 
 # determine the number of bytes currently in the floppy image
 currentsize=$(($(wc -c < "$1")))
+if [ "$currentsize" -lt 513 ]; then
+    echo "The floppy image $1 must be at least 513 bytes in size"
+    exit 2
+fi
 # calculate the number of bytes in the last sector of the floppy image
 secfillsize=$(($currentsize % 512))
 # calculate the number of bytes to fill to a sector boundary
@@ -21,6 +25,10 @@ fi
 
 # determine the number of sectors the image has currently
 floppysecs=$(($(wc -c < "$1") / 512))
+
+# insert the number of sectors to read to the boot sector
+printf "$(printf '\\%03o' $(($floppysecs - 1)))" | dd of="$1" bs=1 seek=509 count=1 conv=notrunc status=none
+
 # calculate the number of sectors that have to be written to have a full floppy image
 fillsecs=$((2880 - $floppysecs))
 

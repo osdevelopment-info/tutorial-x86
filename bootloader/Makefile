@@ -5,7 +5,7 @@ all: floppy pdf
 
 floppy: bootloader dummypayload
 	cat bootloader dummypayload > floppy
-	./sectorfill.sh floppy
+	./makebootfloppy.sh floppy
 
 bootloader.asm: bootloader.nw
 	notangle -Rbootloader.asm bootloader.nw > bootloader.asm
