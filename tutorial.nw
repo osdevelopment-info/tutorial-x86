@@ -9,6 +9,7 @@
 \usepackage{marginnote}
 \usepackage[acronym,toc,numberedsection=autolabel,nopostdot]{glossaries}
 \usepackage[numindex,nottoc,notbib]{tocbibind}
+\usepackage{graphicx}
 
 \renewcommand{\rm}[0]{\normalfont \rmfamily}
 \renewcommand{\tt}[0]{\normalfont \ttfamily}
@@ -1711,7 +1712,7 @@ To help you with using this tutorial I created some
 \end{itemize}
 
 \begin{verbatim}
-break *0x7c00
+break *0x8000
 set disassembly-flavor intel
 set disassemble-next-line on
 set architecture i8086
@@ -1719,6 +1720,25 @@ layout asm
 layout regs
 target remote localhost:1234
 \end{verbatim}
+
+\begin{verbatim}
+git clone https://github.com/osdevelopment-info/tutorial-x86
+cd tutorial-x86/bootloader
+vi test.asm / nano test.asm / pico test.asm
+nasm test.asm -o test
+cat bootloader test > floppy
+./makebootfloppy.sh floppy
+qemu-system-i386 -s -S -drive format=raw,file=floppy,if=floppy \
+-cpu 486 -display curses
+<Strg>-F2
+gdbtui
+\end{verbatim}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.0\textwidth]{figures/gdbtui-intro.png}
+  \caption{GDB TUI in action.}
+\end{figure}
 
 \chapter{8086}
 \label{ch:8086}
