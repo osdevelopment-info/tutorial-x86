@@ -1,6 +1,8 @@
 dummypayload
 floppy
 image
+bootloader.tex
+tutorial.tex
 *~
 *.acn
 *.acr
@@ -18,5 +20,4 @@ image
 *.log
 *.lst
 *.out
-*.tex
 *.toc
