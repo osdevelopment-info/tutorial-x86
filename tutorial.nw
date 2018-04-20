@@ -50,45 +50,9 @@
 
 \setacronymstyle{long-short}
 
-\newacronym{bcd}{BCD}{binary coded decimal}
+\loadglsentries{acronym}
 
-\newacronym{fpu}{FPU}{floating point unit}
-
-\newacronym{gdb}{GDB}{GNU Debugger}
-
-\newacronym{tlb}{TLB}{translation lookaside buffer}
-
-\newacronym{vm}{VM}{virtual machine}
-
-\newglossaryentry{git}{
-    name=git,
-    description={a version control system}
-}
-
-\newglossaryentry{nasm}{
-    name=NASM,
-    description={the assembler used in this book (The Netwide Assembler)}
-}
-
-\newglossaryentry{qemu}{
-    name=QEMU,
-    description={the \gls{x86} emulator used in this book}
-}
-
-\newglossaryentry{debian}{
-    name=debian,
-    description={the Linux distribution used in this book}
-}
-
-\newglossaryentry{x86}{
-    name=x86,
-    description={a microprocessor architecture based on the 8086/8088 from Intel}
-}
-
-\newglossaryentry{x87}{
-    name=x87,
-    description={a mathematical coprocessor for the \gls{x86}}
-}
+\loadglsentries{glossary}
 
 \loadglsentries{ins-gls}
 
@@ -127,7 +91,7 @@ language extensions in chapter \ref{ch:8087}, which is the first \gls{x87} \gls{
 Further on I will visit the other CPUs in historical order. We go on with the \nameref{ch:80286} in chapter
 \ref{ch:80286}, the \nameref{ch:80386} in chapter \ref{ch:80386} and the \nameref{ch:80486} in chapter \ref{ch:80486}.
 
-After that I will not go on with different processors but with features. This starts with the chapter \nameref{ch:CPUID}
+After that I will not go on with different processors but with features. This starts with the chapter \nameref{ch:cpuid}
 which is the first feature I'll discuss. This is the base for all other features because with the \gls{cpuid} you can
 determine all other features. This is because not every processor needs to implement all features.
 
@@ -162,12 +126,45 @@ Additionally this book has several appendices. The appendices have the following
 
 When an instruction is used on a page this instruction in printed in the margin for easier reference.
 
-\section{Environment}
+All examples in this book are written in Intel syntax. To see the differences between AT\&T syntax and Intel syntax
+please refer to the chapter \ref{ch:Assembly Syntax}~\nameref{ch:Assembly Syntax}.
 
-\subsection{Setup}
+In examples I will write the instructions in lower case letters and registers in upper case letters. If I need to use a
+label then this will also be in lower case.
 
-Developing in assembly is sometimes cumbersome because you have not much help of the tools, e.g. the assembler does not
-do many checks for you.
+\chapter{Environment}
+
+\section{Introduction}
+
+To develop software, independent of the programming language used, you need some tools. I selected some tools that I
+will use in this tutorial.
+
+We will not develop application software in this tutorial but will look at the instructions and therefore have special
+requirements on the tools. Also we have nothing that supports us with doing regular tasks such as printing a text to
+the screen. Therefore most of the time we will run our programs in an isolated environment and see the results directly
+in a \gls{debugger}.
+
+If you are used to work with \gls{linux}\index{Linux} then please go on to section \ref{sec:environment/setup}. There I
+list all software needed and give a short introduction to each of this tools.
+
+If you do not know \gls{linux}\index{Linux} or are not used to work with the \gls{acr-cli} then it is best to continue
+with section \ref{sec:environment/vm}. In this section I will show a \gls{vm}\index{VM} that contains everything and
+also give an instruction on how to use everything with a step--by--step introduction.
+
+\section{Setup}
+\label{sec:environment/setup}
+
+Needed software:
+
+\begin{itemize}
+\item \gls{nasm}
+\item \gls{gdb}
+\item \gls{qemu} (install the package qemu-system-x86)
+\item \gls{git}
+\end{itemize}
+
+\section{VM}
+\label{sec:environment/vm}
 
 So to help you with using this tutorial I created a toolset that may help you. Basically I created a \gls{vm} that
 contains everything that you need to see the instructions work as explained in this book. The \gls{vm} contains a basic
@@ -250,7 +247,7 @@ target remote localhost:1234
 This file sets the correct breakpoint and program layout for \gls{gdb} and tries to connect to \gls{qemu} which should
 already be running when calling \gls{gdb}.
 
-\subsection{Test Setup}
+\section{Test Setup}
 
 
 
@@ -982,7 +979,7 @@ TBD\marginnote{\gls{xadd}}
 TBD\marginnote{\gls{rsm}}
 
 \chapter{Processor with CPUID}
-\label{ch:CPUID}
+\label{ch:cpuid}
 
 \begin{itemize}
 \item released 1993 (Intel)
@@ -1381,6 +1378,183 @@ This is a temporary chapter to help me organize this book.
 \end{itemize}
 
 \appendix
+
+\chapter{Assembly Syntax}
+\label{ch:Assembly Syntax}
+
+\section{Introduction}
+
+There are two different syntaxes for assembly language for the \gls{x86} assembly language. One is the
+AT\&T\index[idx]{Assembly Syntax!AT\&T} syntax and the other is the Intel\index[idx]{Assembly Syntax!Intel} syntax.
+
+The difference looks like this:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movw %DX,%AX
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov AX,DX
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+If you work with \gls{linux} or other Unix like systems you will most likely find the AT\&T syntax. If you use material
+from Intel you will find the Intel syntax. I will use the Intel syntax in this book as I will reference Intel material
+for reference.
+
+In the remaining section I will explain all differences between the syntaxes.
+
+\section{Register Naming}
+
+The registers have a plain name in Intel, like \verb|AX| or \verb|RAX|. In AT\&T syntax each register is prefixed with
+\verb|%| so the registers would be named \verb|%AX| or \verb|%RAX|.
+
+Example:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+%AX
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+AX
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\section{Immediate Value}
+
+If you use an immediate value (e.g. a constant) then you have to prefix this with \verb|$| in AT\&T syntax. In Intel
+syntax a prefix is not needed. When using binary immediates you have to prefix the value with \verb|0b|, hexadecimal
+immediates must be prefixed with \verb|0x|. If you start an immediate with \verb|0| (the figure 0) then the value is
+interpreted as octal in AT\&T syntax whereas in Intel syntax you prefix the immediate with \verb|0o| or \verb|0q|.
+
+Example for moving a binary value to \verb|BL|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $0b00111100,%BL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BL,0b00111100
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+Example for moving an octal value to \verb|BL|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $0123,%BL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BL,0o123
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+Example for moving a decimal value to \verb|BL|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $15,%BL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BL,15
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+Example for moving a hexadecimal value to \verb|BL|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $0xab,%BL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BL,0xab
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\section{Order of Operands}
+
+The order of operands are reversed between AT\&T syntax and Intel syntax. In AT\&T syntax you name the source operand(s)
+first and the target last. In Intel syntax the target is named first and then the source operand(s).
+
+Example to move a value from \verb|AX| to \verb|BX|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movl %AX,%BX
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BX,AX
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\section{Data Size Determination}
+
+In AT\&T syntax you usually append a suffix to the instruction to determine the data size. This is done by appending
+\verb|b| for byte (8~bit integer) operands, \verb|s| for short (16~bit integer/32~bit float) operands, \verb|w| for word
+(16~bit integer) operands, \verb|l| for long (32~bit integer/64~bit float) operands, \verb|q| for quad (64~bit integer)
+operands and \verb|t| for ten~byte (80~bit float) operands.
+
+In Intel sytax you only determine the operand size if it is not deferable by the operands directly. So you add
+\verb|byte| for a byte (8~bit), \verb|word| for a word (16~bit), \verb|dword| for a double word (32~bit) and
+\verb|qword| for a quad word (64~bit).
+
+Example to move a byte to a register:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $0x80,%AL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov AL,0x80
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+Example to move a word into a memory location:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movw $0x8080,(%EAX)
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov word[EAX],0x8080
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\section{Indirect Memory Access}
+
+When accessing the memory with an address in a register the syntax also differs. In AT\&T syntax you enclose the
+register with round brackets (\verb|()|). In Intel syntax you use square brackets for this (\verb|[]|).
+
+Example to load the byte from the address stored in \verb|ESI| to \verb|AH|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb (%ESI),%AH
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov AH,[ESI]
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
 
 \printglossary
 
