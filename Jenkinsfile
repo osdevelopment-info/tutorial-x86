@@ -53,6 +53,7 @@ pipeline {
             git config push.default simple
             cd checkout
             git checkout gh-pages
+            mkdir -p bootloader/
             cp ../*.pdf .
             cp ../bootloader/bootloader bootloader/
             cp ../bootloader/bootloader.pdf bootloader/
