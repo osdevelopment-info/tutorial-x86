@@ -4,11 +4,13 @@
 \usepackage{noweb}
 \usepackage{xcolor}
 \usepackage[breaklinks]{hyperref}
-%\usepackage{imakeidx}
 \usepackage[useindex]{splitidx}
 \usepackage{marginnote}
 \usepackage[acronym,toc,numberedsection=autolabel,nopostdot]{glossaries}
 \usepackage[numindex,nottoc,notbib]{tocbibind}
+\usepackage{graphicx}
+\usepackage{keystroke}
+\usepackage{pmboxdraw}
 
 \renewcommand{\rm}[0]{\normalfont \rmfamily}
 \renewcommand{\tt}[0]{\normalfont \ttfamily}
@@ -48,1588 +50,11 @@
 
 \setacronymstyle{long-short}
 
-\newacronym{bcd}{BCD}{binary coded decimal}
+\loadglsentries{acronym}
 
-\newacronym{fpu}{FPU}{floating point unit}
+\loadglsentries{glossary}
 
-\newacronym{tlb}{TLB}{translation lookaside buffer}
-
-\newglossaryentry{x86}{
-    name=x86,
-    description={a microprocessor architecture based on the 8086/8088 from Intel}
-}
-
-\newglossaryentry{x87}{
-    name=x87,
-    description={a mathematical coprocessor for the \gls{x86}}
-}
-
-\newglossaryentry{aaa}{
-    type=ins-glo,
-    name=\texttt{AAA},
-    description={ASCII adjust AL after addition, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{aad}{
-    type=ins-glo,
-    name=\texttt{AAD},
-    description={ASCII adjust AX before division, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{aam}{
-    type=ins-glo,
-    name=\texttt{AAM},
-    description={ASCII adjust AX after multiplication, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{aas}{
-    type=ins-glo,
-    name=\texttt{AAS},
-    description={ASCII adjust AL after subtraction, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{adc}{
-    type=ins-glo,
-    name=\texttt{ADC},
-    description={Add with carry, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{add}{
-    type=ins-glo,
-    name=\texttt{ADD},
-    description={Add, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{and}{
-    type=ins-glo,
-    name=\texttt{AND},
-    description={Logical AND, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{call}{
-    type=ins-glo,
-    name=\texttt{CALL},
-    description={Call procedure, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{cbw}{
-    type=ins-glo,
-    name=\texttt{CBW},
-    description={Convert byte to word, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{clc}{
-    type=ins-glo,
-    name=\texttt{CLC},
-    description={Clear carry flag, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{cld}{
-    type=ins-glo,
-    name=\texttt{CLD},
-    description={Clear direction flag, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{cli}{
-    type=ins-glo,
-    name=\texttt{CLI},
-    description={Clear interrupt flag, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{cmc}{
-    type=ins-glo,
-    name=\texttt{CMC},
-    description={Complement carry flag, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{cmp}{
-    type=ins-glo,
-    name=\texttt{CMP},
-    description={Compare two operands, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{cmps}{
-    type=ins-glo,
-    name=\texttt{CMPS},
-    description={Compare string operands, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{cwd}{
-    type=ins-glo,
-    name=\texttt{CWD},
-    description={Convert word to doubleword, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{daa}{
-    type=ins-glo,
-    name=\texttt{DAA},
-    description={Decimal adjust AL after addition, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{das}{
-    type=ins-glo,
-    name=\texttt{DAS},
-    description={Decimal adjust AL after subtraction, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{dec}{
-    type=ins-glo,
-    name=\texttt{DEC},
-    description={Decrement by 1, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{div}{
-    type=ins-glo,
-    name=\texttt{DIV},
-    description={Unsigned divide, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{hlt}{
-    type=ins-glo,
-    name=\texttt{HLT},
-    description={Halt, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{idiv}{
-    type=ins-glo,
-    name=\texttt{IDIV},
-    description={Signed divide, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{imul}{
-    type=ins-glo,
-    name=\texttt{IMUL},
-    description={Signed multiply, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186},
-        \nameref{ch:80386}}
-}
-
-\newglossaryentry{in}{
-    type=ins-glo,
-    name=\texttt{IN},
-    description={Input from port, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{inc}{
-    type=ins-glo,
-    name=\texttt{INC},
-    description={Increment by 1, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{int}{
-    type=ins-glo,
-    name=\texttt{INT},
-    description={Call to interrupt procedure, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{into}{
-    type=ins-glo,
-    name=\texttt{INTO},
-    description={Call to interrupt procedure if overflow, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{iret}{
-    type=ins-glo,
-    name=\texttt{IRET},
-    description={Interrupt return, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{jcc}{
-    type=ins-glo,
-    name=\texttt{Jcc},
-    description={Jump if condition is met, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{jmp}{
-    type=ins-glo,
-    name=\texttt{JMP},
-    description={Jump, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{lahf}{
-    type=ins-glo,
-    name=\texttt{LAHF},
-    description={Load status flags into AH register, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{lds}{
-    type=ins-glo,
-    name=\texttt{LDS},
-    description={Load DS with far pointer, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{lea}{
-    type=ins-glo,
-    name=\texttt{LEA},
-    description={Load effective address, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{les}{
-    type=ins-glo,
-    name=\texttt{LES},
-    description={Load ES with far pointer, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{lock}{
-    type=ins-glo,
-    name=\texttt{LOCK},
-    description={Assert LOCK\# signal prefix, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{lods}{
-    type=ins-glo,
-    name=\texttt{LODS},
-    description={Load string, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{loop}{
-    type=ins-glo,
-    name=\texttt{LOOP/LOOPcc},
-    description={Loop according to (E/R)CX counter, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{mov}{
-    type=ins-glo,
-    name=\texttt{MOV},
-    description={Move, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{movs}{
-    type=ins-glo,
-    name=\texttt{MOVS},
-    description={Move data from string to string, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{mul}{
-    type=ins-glo,
-    name=\texttt{MUL},
-    description={Unsigned multiply, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{neg}{
-    type=ins-glo,
-    name=\texttt{NEG},
-    description={Two's complement negation, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{nop}{
-    type=ins-glo,
-    name=\texttt{NOP},
-    description={No operation, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{not}{
-    type=ins-glo,
-    name=\texttt{NOT},
-    description={One's complement negation, logical NOT, introduced with \nameref{ch:8086},
-        extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{or}{
-    type=ins-glo,
-    name=\texttt{OR},
-    description={Logical inclusive OR, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{out}{
-    type=ins-glo,
-    name=\texttt{OUT},
-    description={Output to port, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{pop}{
-    type=ins-glo,
-    name=\texttt{POP},
-    description={Pop a value from the stack, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{popf}{
-    type=ins-glo,
-    name=\texttt{POPF},
-    description={Pop stack into FLAGS register, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{push}{
-    type=ins-glo,
-    name=\texttt{PUSH},
-    description={Push data onto the stack, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186},
-        \nameref{ch:80386}}
-}
-
-\newglossaryentry{pushf}{
-    type=ins-glo,
-    name=\texttt{PUSHF},
-    description={Push FLAGS register onto the stack, introduced with \nameref{ch:8086},
-        extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{rcl}{
-    type=ins-glo,
-    name=\texttt{RCL},
-    description={Rotate left through carry, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186},
-        \nameref{ch:80386}}
-}
-
-\newglossaryentry{rcr}{
-    type=ins-glo,
-    name=\texttt{RCR},
-    description={Rotate right through carry, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186},
-        \nameref{ch:80386}}
-}
-
-\newglossaryentry{rep}{
-    type=ins-glo,
-    name=\texttt{REPcc},
-    description={Repeat string operation prefix, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{ret}{
-    type=ins-glo,
-    name=\texttt{RET},
-    description={Return from procedure, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{rol}{
-    type=ins-glo,
-    name=\texttt{ROL},
-    description={Rotate left, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186}, \nameref{ch:80386}}
-}
-
-\newglossaryentry{ror}{
-    type=ins-glo,
-    name=\texttt{ROR},
-    description={Rotate right, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186}, \nameref{ch:80386}}
-}
-
-\newglossaryentry{sahf}{
-    type=ins-glo,
-    name=\texttt{SAHF},
-    description={Store AH into flags, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{sal}{
-    type=ins-glo,
-    name=\texttt{SAL},
-    description={Shift arithmetically left, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186},
-        \nameref{ch:80386}}
-}
-
-\newglossaryentry{sar}{
-    type=ins-glo,
-    name=\texttt{SAR},
-    description={Shift arithmetically right, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186},
-        \nameref{ch:80386}}
-}
-
-\newglossaryentry{sbb}{
-    type=ins-glo,
-    name=\texttt{SBB},
-    description={Integer subtraction with borrow, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{scas}{
-    type=ins-glo,
-    name=\texttt{SCAS},
-    description={Scan string, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{shl}{
-    type=ins-glo,
-    name=\texttt{SHL},
-    description={Shift left, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186}, \nameref{ch:80386}}
-}
-
-\newglossaryentry{shr}{
-    type=ins-glo,
-    name=\texttt{SHR},
-    description={Shift right, introduced with \nameref{ch:8086}, extended with \nameref{ch:80186}, \nameref{ch:80386}}
-}
-
-\newglossaryentry{stc}{
-    type=ins-glo,
-    name=\texttt{STC},
-    description={Set carry flag, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{std}{
-    type=ins-glo,
-    name=\texttt{STD},
-    description={Set direction flag, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{sti}{
-    type=ins-glo,
-    name=\texttt{STI},
-    description={Set interrupt flag, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{stos}{
-    type=ins-glo,
-    name=\texttt{STOS},
-    description={Store string, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{sub}{
-    type=ins-glo,
-    name=\texttt{SUB},
-    description={Subtract, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{test}{
-    type=ins-glo,
-    name=\texttt{TEST},
-    description={Logical compare, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{wait}{
-    type=ins-glo,
-    name=\texttt{WAIT},
-    description={Wait, introduced with \nameref{ch:8086}}
-}
-
-\newglossaryentry{xchg}{
-    type=ins-glo,
-    name=\texttt{XCHG},
-    description={Exchange register/memory with register, introduced with \nameref{ch:8086},
-        extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{xlat}{
-    type=ins-glo,
-    name=\texttt{XLAT},
-    description={Table look-up translation, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{xor}{
-    type=ins-glo,
-    name=\texttt{XOR},
-    description={Logical exclusive OR, introduced with \nameref{ch:8086}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{f2xm1}{
-    type=ins-glo,
-    name=\texttt{F2XM1},
-    description={Computer $2^{x}-1$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fabs}{
-    type=ins-glo,
-    name=\texttt{FABS},
-    description={Absolute value, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fadd}{
-    type=ins-glo,
-    name=\texttt{FADD},
-    description={Add, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{faddp}{
-    type=ins-glo,
-    name=\texttt{FADDP},
-    description={Add and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fbld}{
-    type=ins-glo,
-    name=\texttt{FBLD},
-    description={Load \gls{bcd}, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fbstp}{
-    type=ins-glo,
-    name=\texttt{FBSTP},
-    description={Store \gls{bcd} integer and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fchs}{
-    type=ins-glo,
-    name=\texttt{FCHS},
-    description={Change sign, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fclex}{
-    type=ins-glo,
-    name=\texttt{FCLEX},
-    description={Clear exceptions, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fcom}{
-    type=ins-glo,
-    name=\texttt{FCOM},
-    description={Compare floating point values, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fcomp}{
-    type=ins-glo,
-    name=\texttt{FCOMP},
-    description={Compare floating point values and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fcompp}{
-    type=ins-glo,
-    name=\texttt{FCOMPP},
-    description={Compare floating point values and pop twice, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fdecstp}{
-    type=ins-glo,
-    name=\texttt{FDECSTP},
-    description={Decrement stack-top pointer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fdisi}{
-    type=ins-glo,
-    name=\texttt{FDISI},
-    description={Disable interrupts, introduced with \nameref{ch:8087}, \gls{fnop} on other \glspl{fpu}}
-}
-
-\newglossaryentry{fdiv}{
-    type=ins-glo,
-    name=\texttt{FDIV},
-    description={Divide, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fdivp}{
-    type=ins-glo,
-    name=\texttt{FDIVP},
-    description={Divide and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fdivr}{
-    type=ins-glo,
-    name=\texttt{FDIVR},
-    description={Reverse divide, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fdivrp}{
-    type=ins-glo,
-    name=\texttt{FDIVRP},
-    description={Reverse divide and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{feni}{
-    type=ins-glo,
-    name=\texttt{FENI},
-    description={Enable interrupts, introduced with \nameref{ch:8087}, \gls{fnop} on other \glspl{fpu}}
-}
-
-\newglossaryentry{ffree}{
-    type=ins-glo,
-    name=\texttt{FFREE},
-    description={Free floating-pont register, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fiadd}{
-    type=ins-glo,
-    name=\texttt{FIADD},
-    description={Add integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{ficom}{
-    type=ins-glo,
-    name=\texttt{FICOM},
-    description={Compare integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{ficomp}{
-    type=ins-glo,
-    name=\texttt{FICOMP},
-    description={Compare integer and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fidiv}{
-    type=ins-glo,
-    name=\texttt{FIDIV},
-    description={Divide integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fidivr}{
-    type=ins-glo,
-    name=\texttt{FIDIVR},
-    description={Reverse divide integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fild}{
-    type=ins-glo,
-    name=\texttt{FILD},
-    description={Load integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fimul}{
-    type=ins-glo,
-    name=\texttt{FIMUL},
-    description={Multiply integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fincstp}{
-    type=ins-glo,
-    name=\texttt{FINCSTP},
-    description={Increment stack-top pointer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{finit}{
-    type=ins-glo,
-    name=\texttt{FINIT},
-    description={Initialize floating point unit, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fist}{
-    type=ins-glo,
-    name=\texttt{FIST},
-    description={Store integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fistp}{
-    type=ins-glo,
-    name=\texttt{FISTP},
-    description={Store integer and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fisub}{
-    type=ins-glo,
-    name=\texttt{FISUB},
-    description={Subtract integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fisubr}{
-    type=ins-glo,
-    name=\texttt{FISUBR},
-    description={Reverse subtract integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fld}{
-    type=ins-glo,
-    name=\texttt{FLD},
-    description={Load floating point value, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fld1}{
-    type=ins-glo,
-    name=\texttt{FLD1},
-    description={Load constant $1.0$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fldcw}{
-    type=ins-glo,
-    name=\texttt{FLDCW},
-    description={Load \gls{x87} \gls{fpu} control word, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fldenv}{
-    type=ins-glo,
-    name=\texttt{FLDENV},
-    description={Load \gls{x87} \gls{fpu} environment, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fldl2e}{
-    type=ins-glo,
-    name=\texttt{FLDL2E},
-    description={Load constant $log_2(e)$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fldl2t}{
-    type=ins-glo,
-    name=\texttt{FLDL2T},
-    description={Load constant $log_2(10)$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fldlg2}{
-    type=ins-glo,
-    name=\texttt{FLDLG2},
-    description={Load constant $log_10(2)$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fldln2}{
-    type=ins-glo,
-    name=\texttt{FLDLN2},
-    description={Load constant $ln(2)$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fldpi}{
-    type=ins-glo,
-    name=\texttt{FLDPI},
-    description={Load constant $\pi$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fldz}{
-    type=ins-glo,
-    name=\texttt{FLDZ},
-    description={Load constant $0.0$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fmul}{
-    type=ins-glo,
-    name=\texttt{FMUL},
-    description={Multiply, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fmulp}{
-    type=ins-glo,
-    name=\texttt{FMULP},
-    description={Multiply and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fnclex}{
-    type=ins-glo,
-    name=\texttt{FNCLEX},
-    description={Clear exceptions, no wait, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fndisi}{
-    type=ins-glo,
-    name=\texttt{FNDISI},
-    description={Disable interrupts, no wait, introduced with \nameref{ch:8087}, \gls{fnop} on other \glspl{fpu}}
-}
-
-\newglossaryentry{fneni}{
-    type=ins-glo,
-    name=\texttt{FNENI},
-    description={Enable interrupts, no wait, introduced with \nameref{ch:8087}, \gls{fnop} on other \glspl{fpu}}
-}
-
-\newglossaryentry{fninit}{
-    type=ins-glo,
-    name=\texttt{FNINIT},
-    description={Initialize floating point unit, no wait, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fnop}{
-    type=ins-glo,
-    name=\texttt{FNOP},
-    description={No operation, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fnsave}{
-    type=ins-glo,
-    name=\texttt{FNSAVE},
-    description={Save \gls{x87} \gls{fpu} state, no wait, introduced with \nameref{ch:8087},
-        extended with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fnstcw}{
-    type=ins-glo,
-    name=\texttt{FNSTCW},
-    description={Store \gls{x87} \gls{fpu} control word, no wait, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fnstenv}{
-    type=ins-glo,
-    name=\texttt{FNSTENV},
-    description={Store \gls{x87} \gls{fpu} environment, no wait, introduced with \nameref{ch:8087},
-        extended with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fnstsw}{
-    type=ins-glo,
-    name=\texttt{FNSTSW},
-    description={Store \gls{x87} \gls{fpu} status word, no wait, introduced with \nameref{ch:8087},
-        extended with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fpatan}{
-    type=ins-glo,
-    name=\texttt{FPATAN},
-    description={Partial arctangent, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fprem}{
-    type=ins-glo,
-    name=\texttt{FPREM},
-    description={Partial remainder, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fptan}{
-    type=ins-glo,
-    name=\texttt{FPTAN},
-    description={Partial tangent, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{frndint}{
-    type=ins-glo,
-    name=\texttt{FRNDINT},
-    description={Round to integer, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{frstor}{
-    type=ins-glo,
-    name=\texttt{FRSTOR},
-    description={Restore \gls{x87} \gls{fpu} state, introduced with \nameref{ch:8087}, extended with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fsave}{
-    type=ins-glo,
-    name=\texttt{FSAVE},
-    description={Save \gls{x87} \gls{fpu} state, introduced with \nameref{ch:8087}, extended with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fscale}{
-    type=ins-glo,
-    name=\texttt{FSCALE},
-    description={Scale, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fsqrt}{
-    type=ins-glo,
-    name=\texttt{FSQRT},
-    description={Square root, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fst}{
-    type=ins-glo,
-    name=\texttt{FST},
-    description={Store floating point value, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fstcw}{
-    type=ins-glo,
-    name=\texttt{FSTCW},
-    description={Store \gls{x87} \gls{fpu} control word, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fstenv}{
-    type=ins-glo,
-    name=\texttt{FSTENV},
-    description={Store \gls{x87} \gls{fpu} environment, introduced with \nameref{ch:8087},
-        extended with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fstp}{
-    type=ins-glo,
-    name=\texttt{FSTP},
-    description={Store floating point value and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fstsw}{
-    type=ins-glo,
-    name=\texttt{FSTSW},
-    description={Store \gls{x87} \gls{fpu} status word, introduced with \nameref{ch:8087},
-        extended with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fsub}{
-    type=ins-glo,
-    name=\texttt{FSUB},
-    description={Subtract, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fsubp}{
-    type=ins-glo,
-    name=\texttt{FSUBP},
-    description={Subtract and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fsubr}{
-    type=ins-glo,
-    name=\texttt{FSUBR},
-    description={Reverse subtract, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fsubrp}{
-    type=ins-glo,
-    name=\texttt{FSUBRP},
-    description={Reverse subtract and pop, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{ftst}{
-    type=ins-glo,
-    name=\texttt{FTST},
-    description={Test, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fwait}{
-    type=ins-glo,
-    name=\texttt{FWAIT},
-    description={Wait (opcode synonym for \gls{wait}), introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fxam}{
-    type=ins-glo,
-    name=\texttt{FXAM},
-    description={Examine floating-point, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fxch}{
-    type=ins-glo,
-    name=\texttt{FXCH},
-    description={Exchange register contents, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fxtract}{
-    type=ins-glo,
-    name=\texttt{FXTRACT},
-    description={Extract exponent and significand, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fyl2x}{
-    type=ins-glo,
-    name=\texttt{FYL2X},
-    description={Compute $y * log_{2}x$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{fyl2xp1}{
-    type=ins-glo,
-    name=\texttt{FYL2XP1},
-    description={Compute $ y * log_2(x+1)$, introduced with \nameref{ch:8087}}
-}
-
-\newglossaryentry{bound}{
-    type=ins-glo,
-    name=\texttt{BOUND},
-    description={Check array index against bounds, introduced with \nameref{ch:80186}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{enter}{
-    type=ins-glo,
-    name=\texttt{ENTER},
-    description={Make stack frame for procedure parameters, introduced with \nameref{ch:80186},
-        extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{ins}{
-    type=ins-glo,
-    name=\texttt{INS},
-    description={Input from port to string, introduced with \nameref{ch:80186}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{leave}{
-    type=ins-glo,
-    name=\texttt{LEAVE},
-    description={High level procedure exit, introduced with \nameref{ch:80186}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{outs}{
-    type=ins-glo,
-    name=\texttt{OUTS},
-    description={Output string to port, introduced with \nameref{ch:80186}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{popa}{
-    type=ins-glo,
-    name=\texttt{POPA},
-    description={Pop all general-purpose registers, introduced with \nameref{ch:80186},
-        extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{pusha}{
-    type=ins-glo,
-    name=\texttt{PUSHA},
-    description={Push all general-purpose registers, introduced with \nameref{ch:80186},
-        extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{arpl}{
-    type=ins-glo,
-    name=\texttt{ARPL},
-    description={Adjust RPL field of selector, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{clts}{
-    type=ins-glo,
-    name=\texttt{CLTS},
-    description={Clear task-switched flag in CR0, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{lar}{
-    type=ins-glo,
-    name=\texttt{LAR},
-    description={Load access rights byte, introduced with \nameref{ch:80286}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{lgdt}{
-    type=ins-glo,
-    name=\texttt{LGDT},
-    description={Load global descriptor table register, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{lidt}{
-    type=ins-glo,
-    name=\texttt{LIDT},
-    description={Load interrupt descriptor table register, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{lldt}{
-    type=ins-glo,
-    name=\texttt{LLDT},
-    description={Load local descriptor table register, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{lmsw}{
-    type=ins-glo,
-    name=\texttt{LMSW},
-    description={Load machine status word, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{lsl}{
-    type=ins-glo,
-    name=\texttt{LSL},
-    description={Load segment limit, introduced with \nameref{ch:80286}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{ltr}{
-    type=ins-glo,
-    name=\texttt{LTR},
-    description={Load task register, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{sgdt}{
-    type=ins-glo,
-    name=\texttt{SGDT},
-    description={Store global descriptor table register, introduced with \nameref{ch:80286},
-        extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{sidt}{
-    type=ins-glo,
-    name=\texttt{SIDT},
-    description={Store interrupt descriptor table register, introduced with \nameref{ch:80286},
-        extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{sldt}{
-    type=ins-glo,
-    name=\texttt{SLDT},
-    description={Store local descriptor table register, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{smsw}{
-    type=ins-glo,
-    name=\texttt{SMSW},
-    description={Store machine status word, introduced with \nameref{ch:80286}, extended with \nameref{ch:80386}}
-}
-
-\newglossaryentry{str}{
-    type=ins-glo,
-    name=\texttt{STR},
-    description={Store task register, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{verr}{
-    type=ins-glo,
-    name=\texttt{VERR},
-    description={Verify a segment for reading, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{verw}{
-    type=ins-glo,
-    name=\texttt{VERW},
-    description={Verify a segment for writing, introduced with \nameref{ch:80286}}
-}
-
-\newglossaryentry{fsetpm}{
-    type=ins-glo,
-    name=\texttt{FSETPM},
-    description={Set protected mode, introduced with \nameref{ch:80287}, \gls{fnop} on other \glspl{fpu}}
-}
-
-\newglossaryentry{bsf}{
-    type=ins-glo,
-    name=\texttt{BSF},
-    description={Bit scan forward, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{bsr}{
-    type=ins-glo,
-    name=\texttt{BSR},
-    description={Bit scan reverse, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{bt}{
-    type=ins-glo,
-    name=\texttt{BT},
-    description={Bit test, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{btc}{
-    type=ins-glo,
-    name=\texttt{BTC},
-    description={Bit test and complement, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{btr}{
-    type=ins-glo,
-    name=\texttt{BTR},
-    description={Bit test and reset, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{bts}{
-    type=ins-glo,
-    name=\texttt{BTS},
-    description={Bit test and set, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{cdq}{
-    type=ins-glo,
-    name=\texttt{CDQ},
-    description={Convert double-word to quad-word, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{cwde}{
-    type=ins-glo,
-    name=\texttt{CWDE},
-    description={Convert word to double-word, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{lfs}{
-    type=ins-glo,
-    name=\texttt{LFS},
-    description={Load FS with far pointer, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{lgs}{
-    type=ins-glo,
-    name=\texttt{LGS},
-    description={Load GS with far pointer, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{lss}{
-    type=ins-glo,
-    name=\texttt{LSS},
-    description={Load SS with far pointer, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{movsx}{
-    type=ins-glo,
-    name=\texttt{MOVSX},
-    description={Move with sign-extension, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{movzx}{
-    type=ins-glo,
-    name=\texttt{MOVZX},
-    description={Move with zero-extend, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{setcc}{
-    type=ins-glo,
-    name=\texttt{SETcc},
-    description={Set byte on condition, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{shld}{
-    type=ins-glo,
-    name=\texttt{SHLD},
-    description={Double precision shift left, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{shrd}{
-    type=ins-glo,
-    name=\texttt{SHRD},
-    description={Double precision shift right, introduced with \nameref{ch:80386}}
-}
-
-\newglossaryentry{fcos}{
-    type=ins-glo,
-    name=\texttt{FCOS},
-    description={Cosine, introduced with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fprem1}{
-    type=ins-glo,
-    name=\texttt{FPREM1},
-    description={Partial remainder (IEEE), introduced with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fsin}{
-    type=ins-glo,
-    name=\texttt{FSIN},
-    description={Sine, introduced with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fsincos}{
-    type=ins-glo,
-    name=\texttt{FSINCOS},
-    description={Sine and cosine, introduced with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fucom}{
-    type=ins-glo,
-    name=\texttt{FUCOM},
-    description={Unordered compare floating point values, introduced with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fucomp}{
-    type=ins-glo,
-    name=\texttt{FUCOMP},
-    description={Unordered compare floating point values and pop, introduced with \nameref{ch:80387}}
-}
-
-\newglossaryentry{fucompp}{
-    type=ins-glo,
-    name=\texttt{FUCOMPP},
-    description={Unordered compare floating point values and pop twice, introduced with \nameref{ch:80387}}
-}
-
-\newglossaryentry{bswap}{
-    type=ins-glo,
-    name=\texttt{BSWAP},
-    description={Byte swap, introduced with \nameref{ch:80486}}
-}
-
-\newglossaryentry{cmpxchg}{
-    type=ins-glo,
-    name=\texttt{CMPXCHG},
-    description={Compare and exchange, introduced with \nameref{ch:80486}}
-}
-
-\newglossaryentry{invd}{
-    type=ins-glo,
-    name=\texttt{INVD},
-    description={Invalidate internal caches, introduced with \nameref{ch:80486}}
-}
-
-\newglossaryentry{invlpg}{
-    type=ins-glo,
-    name=\texttt{INVLPG},
-    description={Invalidate \gls{tlb} entries, introduced with \nameref{ch:80486}}
-}
-
-\newglossaryentry{wbinvd}{
-    type=ins-glo,
-    name=\texttt{WBINVD},
-    description={Write back and invalidate cache, introduced with \nameref{ch:80486}}
-}
-
-\newglossaryentry{xadd}{
-    type=ins-glo,
-    name=\texttt{XADD},
-    description={Exchange and add, introduced with \nameref{ch:80486}}
-}
-
-\newglossaryentry{rsm}{
-    type=ins-glo,
-    name=\texttt{RSM},
-    description={Resume from system management mode, introduced with \nameref{ch:RSM}}
-}
-
-\newglossaryentry{cpuid}{
-    type=ins-glo,
-    name=\texttt{CPUID},
-    description={CPU identification, introduced with \nameref{ch:CPUID}}
-}
-
-\newglossaryentry{cmpxchg8b}{
-    type=ins-glo,
-    name=\texttt{CMPXCHG8B},
-    description={Compare and exchange bytes, introduced with \nameref{ch:CX8}}
-}
-
-\newglossaryentry{rdmsr}{
-    type=ins-glo,
-    name=\texttt{RDMSR},
-    description={Read from model specific register, introduced with \nameref{ch:MSR}}
-}
-
-\newglossaryentry{wrmsr}{
-    type=ins-glo,
-    name=\texttt{WRMSR},
-    description={Write to model specific register, introduced with \nameref{ch:MSR}}
-}
-
-\newglossaryentry{rdtsc}{
-    type=ins-glo,
-    name=\texttt{RDTSC},
-    description={Read time-stamp counter, introduced with \nameref{ch:TSC}}
-}
-
-\newglossaryentry{rdpmc}{
-    type=ins-glo,
-    name=\texttt{RDPMC},
-    description={Read performance-monitoring counters, introduced with \nameref{ch:PMC}}
-}
-
-\newglossaryentry{emms}{
-    type=ins-glo,
-    name=\texttt{EMMS},
-    description={Empty MMX technology state, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{movd}{
-    type=ins-glo,
-    name=\texttt{MOVD},
-    description={Move doubleword, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{movq}{
-    type=ins-glo,
-    name=\texttt{MOVQ},
-    description={Move quadword, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{packssdw}{
-    type=ins-glo,
-    name=\texttt{PACKSSDW},
-    description={Pack doublewords with signed saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{packsswb}{
-    type=ins-glo,
-    name=\texttt{PACKSSWB},
-    description={Pack words with signed saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{packuswb}{
-    type=ins-glo,
-    name=\texttt{PACKUSWB},
-    description={Pack words with unsigned saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{paddb}{
-    type=ins-glo,
-    name=\texttt{PADDB},
-    description={Add packed byte integers, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{paddw}{
-    type=ins-glo,
-    name=\texttt{PADDW},
-    description={Add packed word integers, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{paddd}{
-    type=ins-glo,
-    name=\texttt{PADDD},
-    description={Add packed doubleword integers, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{paddq}{
-    type=ins-glo,
-    name=\texttt{PADDQ},
-    description={Add packed quadword integers, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{paddsb}{
-    type=ins-glo,
-    name=\texttt{PADDSB},
-    description={Add packed signed byte integers with signed saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{paddsw}{
-    type=ins-glo,
-    name=\texttt{PADDSW},
-    description={Add packed signed word integers with signed saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{paddusb}{
-    type=ins-glo,
-    name=\texttt{PADDUSB},
-    description={Add packed unsigned byte integers with unsigned saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{paddusw}{
-    type=ins-glo,
-    name=\texttt{PADDUSW},
-    description={Add packed unsigned word integers with unsigned saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pand}{
-    type=ins-glo,
-    name=\texttt{PAND},
-    description={Logical AND, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pandn}{
-    type=ins-glo,
-    name=\texttt{PANDN},
-    description={Logical AND NOT, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pcmpeqb}{
-    type=ins-glo,
-    name=\texttt{PCMPEQB},
-    description={Compare packed bytes for equal, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pcmpeqd}{
-    type=ins-glo,
-    name=\texttt{PCMPEQD},
-    description={Compare packed doublewords for equal, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pcmpeqw}{
-    type=ins-glo,
-    name=\texttt{PCMPEQW},
-    description={Compare packed words for equal, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pcmpgtb}{
-    type=ins-glo,
-    name=\texttt{PCMPGTB},
-    description={Compare packed signed bytes for greater than, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pcmpgtd}{
-    type=ins-glo,
-    name=\texttt{PCMPGTD},
-    description={Compare packed signed doublewords for greater than, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pcmpgtw}{
-    type=ins-glo,
-    name=\texttt{PCMPGTW},
-    description={Compare packed signed words for greater than, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pmaddwd}{
-    type=ins-glo,
-    name=\texttt{PMADDWD},
-    description={Multiply and add packed integers, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pmulhw}{
-    type=ins-glo,
-    name=\texttt{PMULHW},
-    description={Multiply packed signed integers and store high result, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pmullw}{
-    type=ins-glo,
-    name=\texttt{PMULLW},
-    description={Multiply packed signed integers and store low result, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{por}{
-    type=ins-glo,
-    name=\texttt{POR},
-    description={Bitwise logical OR, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pslld}{
-    type=ins-glo,
-    name=\texttt{PSLLD},
-    description={Shift packed doublewords left logical, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psllq}{
-    type=ins-glo,
-    name=\texttt{PSLLQ},
-    description={Shift packed quadwords left logical, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psllw}{
-    type=ins-glo,
-    name=\texttt{PSLLW},
-    description={Shift packed words left logical, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psrad}{
-    type=ins-glo,
-    name=\texttt{PDRAD},
-    description={Shift packed doublewords right arithmetic, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psraq}{
-    type=ins-glo,
-    name=\texttt{PDRAQ},
-    description={Shift packed quadwords right arithmetic, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psraw}{
-    type=ins-glo,
-    name=\texttt{PDRAW},
-    description={Shift packed words right arithmetic, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psrld}{
-    type=ins-glo,
-    name=\texttt{PDRLD},
-    description={Shift packed doublewords right logical, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psrlq}{
-    type=ins-glo,
-    name=\texttt{PDRLQ},
-    description={Shift packed quadwords right logical, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psrlw}{
-    type=ins-glo,
-    name=\texttt{PDRLW},
-    description={Shift packed words right logical, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psubb}{
-    type=ins-glo,
-    name=\texttt{PSUBB},
-    description={Subtract packed byte integers, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psubd}{
-    type=ins-glo,
-    name=\texttt{PSUBD},
-    description={Subtract packed doubleword integers, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psubw}{
-    type=ins-glo,
-    name=\texttt{PSUBW},
-    description={Subtract packed word integers, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psubsb}{
-    type=ins-glo,
-    name=\texttt{PSUBSB},
-    description={Subtract packed signed bytes with signed saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psubsw}{
-    type=ins-glo,
-    name=\texttt{PSUBSW},
-    description={Subtract packed signed words with signed saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psubusb}{
-    type=ins-glo,
-    name=\texttt{PSUBUSB},
-    description={Subtract packed unsigned bytes with unsigned saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{psubusw}{
-    type=ins-glo,
-    name=\texttt{PSUBUSW},
-    description={Subtract packed unsigned words with unsigned saturation, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{punpckhbw}{
-    type=ins-glo,
-    name=\texttt{PUNPCKHBW},
-    description={Unpack high bytes, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{punpckhwd}{
-    type=ins-glo,
-    name=\texttt{PUNPCKHWD},
-    description={Unpack high words, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{punpckhdq}{
-    type=ins-glo,
-    name=\texttt{PUNPCKHDQ},
-    description={Unpack high doublewords, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{punpcklbw}{
-    type=ins-glo,
-    name=\texttt{PUNPCKLBW},
-    description={Unpack low bytes, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{punpcklwd}{
-    type=ins-glo,
-    name=\texttt{PUNPCKLWD},
-    description={Unpack low words, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{punpckldq}{
-    type=ins-glo,
-    name=\texttt{PUNPCKLDQ},
-    description={Unpack low doublewords, introduced with \nameref{ch:MMX}}
-}
-
-\newglossaryentry{pxor}{
-    type=ins-glo,
-    name=\texttt{PXOR},
-    description={Logical exclusive OR, introduced with \nameref{ch:MMX}}
-}
+\loadglsentries{ins-gls}
 
 \begin{document}
 @
@@ -1666,7 +91,7 @@ language extensions in chapter \ref{ch:8087}, which is the first \gls{x87} \gls{
 Further on I will visit the other CPUs in historical order. We go on with the \nameref{ch:80286} in chapter
 \ref{ch:80286}, the \nameref{ch:80386} in chapter \ref{ch:80386} and the \nameref{ch:80486} in chapter \ref{ch:80486}.
 
-After that I will not go on with different processors but with features. This starts with the chapter \nameref{ch:CPUID}
+After that I will not go on with different processors but with features. This starts with the chapter \nameref{ch:cpuid}
 which is the first feature I'll discuss. This is the base for all other features because with the \gls{cpuid} you can
 determine all other features. This is because not every processor needs to implement all features.
 
@@ -1701,17 +126,142 @@ Additionally this book has several appendices. The appendices have the following
 
 When an instruction is used on a page this instruction in printed in the margin for easier reference.
 
-\section{Environment}
+All examples in this book are written in Intel syntax. To see the differences between AT\&T syntax and Intel syntax
+please refer to the chapter \ref{ch:Assembly Syntax}~\nameref{ch:Assembly Syntax}.
 
-To help you with using this tutorial I created some
+In examples I will write the instructions in lower case letters and registers in upper case letters. If I need to use a
+label then this will also be in lower case.
+
+\chapter{Environment}
+
+\section{Introduction}
+
+To develop software, independent of the programming language used, you need some tools. I selected some tools that I
+will use in this tutorial.
+
+We will not develop application software in this tutorial but will look at the instructions and therefore have special
+requirements on the tools. Also we have nothing that supports us with doing regular tasks such as printing a text to
+the screen. Therefore most of the time we will run our programs in an isolated environment and see the results directly
+in a \gls{debugger}.
+
+If you are used to work with \gls{linux}\index{Linux} then please go on to section
+\ref{sec:environment/setup}~\nameref{sec:environment/setup}. There I list all software needed and give a short
+introduction to each of this tools.
+
+If you do not know \gls{linux}\index{Linux} or are not used to work with the \gls{acr-cli} then it is best to continue
+with section \ref{sec:environment/vm}~\nameref{sec:environment/vm}. In this section I will show a \gls{vm}\index{VM}
+that contains everything and also give an instruction on how to use everything with a step--by--step introduction.
+
+In either case after setup you should go the section
+\ref{sec:environment/test setup}~\nameref{sec:environment/test setup} to make a short check of your setup.
+
+\section{Setup}
+\label{sec:environment/setup}
+
+If you already use a \gls{linux} system and know how to use the \gls{acr-cli} then you need to ensure that some software
+is installed.
+
+The following software is included in the standard repositories of most distributions, at least \gls{centos},
+\gls{debian} and \gls{ubuntu} have the software in the repositories.
 
 \begin{itemize}
-\item qemu-system-i386 -s -S -drive format=raw,file=floppy,if=floppy
-\item gdbtui
+\item \gls{nasm}
+\item \gls{gdb}
+\item \gls{qemu} (install the package qemu-system-x86)
+\item \gls{git}
 \end{itemize}
 
+You additionally need to setup an additional repository to install \gls{git-lfs}. The installation instructions for
+setting up the repository for \gls{centos}, \gls{debian} and \gls{ubuntu} can be found at
+\url{https://github.com/git-lfs/git-lfs/wiki/Installation}.
+
+TBD manual setup\marginnote{TBD manual setup}
+
+\section{VM}
+\label{sec:environment/vm}
+
+If you are not using \gls{linux} or not used to use the \gls{acr-cli} on a daily base then the \gls{vm} created for this
+tutorial is perhaps helpfull for you.
+
+TBD download instructions\marginnote{TBD Download}
+
+I created the \gls{vm} using \gls{vbox} and also checked it with \gls{vmware} Player. For \gls{vmware} an additional
+step is needed which is explained later in this section. The software should also run with other virtualization software
+but this is not tested.
+
+The \gls{vm} is a \gls{debian} installation with all additional software installed. The \gls{vm} does not contain a
+\gls{gui} and is only installed with \gls{acr-cli}.
+
+So to help you with using this tutorial I created a toolset that may help you. Basically I created a \gls{vm} that
+contains everything that you need to see the instructions work as explained in this book. The \gls{vm} contains a basic
+\gls{debian} and all tools needed to run the examples. The tools installed are \gls{nasm} (used to assemble your
+programs), \gls{gdb} (a debugger to view into your program) and \gls{qemu} (an emulator to run and debug your program).
+The use of \gls{qemu} is helpfull because it has a direct interface for the debugger and supports also 16-bit programs
+(with which we start). Additionally the \gls{git} repository that hosts this tutorial is checked out (into
+\verb|/home/tut/tutorial-x86|). This repository contains a simple bootloader which helps you loading you programs. We
+will not develop any applications in this book but program directly on the bare metal because then we do not need to
+obey any rules.
+
+So after setting up the \gls{vm} start the \gls{vm} and log in with username \verb|tut| and the password \verb|tut|. If
+you execute any command with \verb|sudo| then you have to repeat your password.
+
+First we should check that the network is working correctly (in some \gls{vm} environments it must be adjusted) by
+issuing the following command
 \begin{verbatim}
-break *0x7c00
+dmesg | grep "renamed from eth"
+\end{verbatim}
+The output of the command is like
+\begin{verbatim}
+[    X.XXXXXX] eXXXX XXXX:XX:XX.X enp0s3: renamed from eth0
+\end{verbatim}
+
+If the name is \verb|enp0s3| then the network should be alright else you have to adjust the network settings.
+
+To adjust the network settings open the file \verb|/etc/network/interfaces| with \verb|nano| or \verb|vi| and change the
+occurences of \verb|enp0s3| with the output of the command above. After the change reboote the \gls{vm} with the command
+\begin{verbatim}
+sudo reboot
+\end{verbatim}
+
+Before we start I suggest updating the operating system of the \gls{vm} and the tutorial repository with the following
+commands
+\begin{verbatim}
+sudo apt-get update
+sudo apt-get upgrade
+cd tutorial-x86
+git pull
+cd
+\end{verbatim}
+
+First create a folder that houses your code samples. I suggest the following structure:
+\\
+tutorial\\
+\textSFviii\textSFx~8086\\
+\textSFviii\textSFx~8087\\
+\textSFviii\textSFx~80186\\
+\textSFviii\textSFx~80286\\
+\textSFviii\textSFx~80287\\
+\textSFviii\textSFx~80386\\
+\textSFviii\textSFx~80387\\
+\textSFviii\textSFx~80486\\
+\textSFviii\textSFx~cpuid\\
+\textSFii\textSFx~...\\
+so having one folder and include a new folder specific to each processor/feature in this book.
+
+Now go into the right folder and copy the \verb|bootloader| and the \verb|makebootfloppy.sh| from
+\verb|/home/tut/tutorial-x86/bootloader| to the folder.
+
+\begin{verbatim}
+cp ~/tutorial-x86/bootloader/bootloader ~/tutorial-x86/bootloader/makebootflopy.sh .
+\end{verbatim}
+
+The \verb|bootloader| loads our code into the memory and the \verb|makebootfloppy.sh| creates a boot floppy for us.
+
+Next we start with coding for the \nameref{ch:8086} so we create a file \verb|.gdbinit| in the current folder with the
+following content (use either \verb|vi| or \verb|nano| for editing)
+
+\begin{verbatim}
+break *0x8000
 set disassembly-flavor intel
 set disassemble-next-line on
 set architecture i8086
@@ -1719,6 +269,39 @@ layout asm
 layout regs
 target remote localhost:1234
 \end{verbatim}
+
+This file sets the correct breakpoint and program layout for \gls{gdb} and tries to connect to \gls{qemu} which should
+already be running when calling \gls{gdb}.
+
+\section{Test Setup}
+\label{sec:environment/test setup}
+
+
+\begin{itemize}
+\item qemu-system-i386 -s -S -drive format=raw,file=floppy,if=floppy
+\item gdbtui
+\end{itemize}
+
+\begin{verbatim}
+git clone https://github.com/osdevelopment-info/tutorial-x86
+cd tutorial-x86/bootloader
+vi test.asm / nano test.asm / pico test.asm
+nasm test.asm -o test
+cat bootloader test > floppy
+./makebootfloppy.sh floppy
+qemu-system-i386 -s -S -drive format=raw,file=floppy,if=floppy \
+-cpu 486 -display curses
+\end{verbatim}
+\Ctrl+\keystroke{F2}
+\begin{verbatim}
+gdbtui
+\end{verbatim}
+
+\begin{figure}[ht]
+  \centering
+    \includegraphics[width=1.0\textwidth]{figures/gdbtui-intro.png}
+  \caption{GDB TUI in action.}
+\end{figure}
 
 \chapter{8086}
 \label{ch:8086}
@@ -2422,7 +1005,7 @@ TBD\marginnote{\gls{xadd}}
 TBD\marginnote{\gls{rsm}}
 
 \chapter{Processor with CPUID}
-\label{ch:CPUID}
+\label{ch:cpuid}
 
 \begin{itemize}
 \item released 1993 (Intel)
@@ -2821,6 +1404,185 @@ This is a temporary chapter to help me organize this book.
 \end{itemize}
 
 \appendix
+
+\chapter{Assembly Syntax}
+\label{ch:Assembly Syntax}
+
+\section{Introduction}
+
+There are two different syntaxes for assembly language for the \gls{x86} assembly language. One is the
+AT\&T\index[idx]{Assembly Syntax!AT\&T|(} syntax and the other is the Intel\index[idx]{Assembly Syntax!Intel|(} syntax.
+
+The difference looks like this:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movw %DX,%AX
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov AX,DX
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+If you work with \gls{linux} or other Unix like systems you will most likely find the AT\&T syntax. If you use material
+from Intel you will find the Intel syntax. I will use the Intel syntax in this book as I will reference Intel material
+for reference.
+
+In the remaining section I will explain all differences between the syntaxes.
+
+\section{Register Naming}
+
+The registers have a plain name in Intel, like \verb|AX| or \verb|RAX|. In AT\&T syntax each register is prefixed with
+\verb|%| so the registers would be named \verb|%AX| or \verb|%RAX|.
+
+Example:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+%AX
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+AX
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\section{Immediate Value}
+
+If you use an immediate value (e.g. a constant) then you have to prefix this with \verb|$| in AT\&T syntax. In Intel
+syntax a prefix is not needed. When using binary immediates you have to prefix the value with \verb|0b|, hexadecimal
+immediates must be prefixed with \verb|0x|. If you start an immediate with \verb|0| (the figure 0) then the value is
+interpreted as octal in AT\&T syntax whereas in Intel syntax you prefix the immediate with \verb|0o| or \verb|0q|.
+
+Example for moving a binary value to \verb|BL|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $0b00111100,%BL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BL,0b00111100
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+Example for moving an octal value to \verb|BL|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $0123,%BL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BL,0o123
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+Example for moving a decimal value to \verb|BL|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $15,%BL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BL,15
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+Example for moving a hexadecimal value to \verb|BL|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $0xab,%BL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BL,0xab
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\section{Order of Operands}
+
+The order of operands are reversed between AT\&T syntax and Intel syntax. In AT\&T syntax you name the source operand(s)
+first and the target last. In Intel syntax the target is named first and then the source operand(s).
+
+Example to move a value from \verb|AX| to \verb|BX|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movl %AX,%BX
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov BX,AX
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\section{Data Size Determination}
+
+In AT\&T syntax you usually append a suffix to the instruction to determine the data size. This is done by appending
+\verb|b| for byte (8~bit integer) operands, \verb|s| for short (16~bit integer/32~bit float) operands, \verb|w| for word
+(16~bit integer) operands, \verb|l| for long (32~bit integer/64~bit float) operands, \verb|q| for quad (64~bit integer)
+operands and \verb|t| for ten~byte (80~bit float) operands.
+
+In Intel sytax you only determine the operand size if it is not deferable by the operands directly. So you add
+\verb|byte| for a byte (8~bit), \verb|word| for a word (16~bit), \verb|dword| for a double word (32~bit) and
+\verb|qword| for a quad word (64~bit).
+
+Example to move a byte to a register:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb $0x80,%AL
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov AL,0x80
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+Example to move a word into a memory location:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movw $0x8080,(%EAX)
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov word[EAX],0x8080
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\section{Indirect Memory Access}
+
+When accessing the memory with an address in a register the syntax also differs. In AT\&T syntax you enclose the
+register with round brackets (\verb|()|). In Intel syntax you use square brackets for this (\verb|[]|).
+
+Example to load the byte from the address stored in \verb|ESI| to \verb|AH|:\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=AT\&T Syntax]
+movb (%ESI),%AH
+\end{Verbatim}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{Verbatim}[frame=single,label=Intel Syntax]
+mov AH,[ESI]
+\end{Verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\index[idx]{Assembly Syntax!AT\&T|)}\index[idx]{Assembly Syntax!Intel|)}
 
 \printglossary
 
