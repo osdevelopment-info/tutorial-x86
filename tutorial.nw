@@ -144,17 +144,25 @@ requirements on the tools. Also we have nothing that supports us with doing regu
 the screen. Therefore most of the time we will run our programs in an isolated environment and see the results directly
 in a \gls{debugger}.
 
-If you are used to work with \gls{linux}\index{Linux} then please go on to section \ref{sec:environment/setup}. There I
-list all software needed and give a short introduction to each of this tools.
+If you are used to work with \gls{linux}\index{Linux} then please go on to section
+\ref{sec:environment/setup}~\nameref{sec:environment/setup}. There I list all software needed and give a short
+introduction to each of this tools.
 
 If you do not know \gls{linux}\index{Linux} or are not used to work with the \gls{acr-cli} then it is best to continue
-with section \ref{sec:environment/vm}. In this section I will show a \gls{vm}\index{VM} that contains everything and
-also give an instruction on how to use everything with a step--by--step introduction.
+with section \ref{sec:environment/vm}~\nameref{sec:environment/vm}. In this section I will show a \gls{vm}\index{VM}
+that contains everything and also give an instruction on how to use everything with a step--by--step introduction.
+
+In either case after setup you should go the section
+\ref{sec:environment/test setup}~\nameref{sec:environment/test setup} to make a short check of your setup.
 
 \section{Setup}
 \label{sec:environment/setup}
 
-Needed software:
+If you already use a \gls{linux} system and know how to use the \gls{acr-cli} then you need to ensure that some software
+is installed.
+
+The following software is included in the standard repositories of most distributions, at least \gls{centos},
+\gls{debian} and \gls{ubuntu} have the software in the repositories.
 
 \begin{itemize}
 \item \gls{nasm}
@@ -163,8 +171,26 @@ Needed software:
 \item \gls{git}
 \end{itemize}
 
+You additionally need to setup an additional repository to install \gls{git-lfs}. The installation instructions for
+setting up the repository for \gls{centos}, \gls{debian} and \gls{ubuntu} can be found at
+\url{https://github.com/git-lfs/git-lfs/wiki/Installation}.
+
+TBD manual setup\marginnote{TBD manual setup}
+
 \section{VM}
 \label{sec:environment/vm}
+
+If you are not using \gls{linux} or not used to use the \gls{acr-cli} on a daily base then the \gls{vm} created for this
+tutorial is perhaps helpfull for you.
+
+TBD download instructions\marginnote{TBD Download}
+
+I created the \gls{vm} using \gls{vbox} and also checked it with \gls{vmware} Player. For \gls{vmware} an additional
+step is needed which is explained later in this section. The software should also run with other virtualization software
+but this is not tested.
+
+The \gls{vm} is a \gls{debian} installation with all additional software installed. The \gls{vm} does not contain a
+\gls{gui} and is only installed with \gls{acr-cli}.
 
 So to help you with using this tutorial I created a toolset that may help you. Basically I created a \gls{vm} that
 contains everything that you need to see the instructions work as explained in this book. The \gls{vm} contains a basic
@@ -248,7 +274,7 @@ This file sets the correct breakpoint and program layout for \gls{gdb} and tries
 already be running when calling \gls{gdb}.
 
 \section{Test Setup}
-
+\label{sec:environment/test setup}
 
 
 \begin{itemize}
@@ -1385,7 +1411,7 @@ This is a temporary chapter to help me organize this book.
 \section{Introduction}
 
 There are two different syntaxes for assembly language for the \gls{x86} assembly language. One is the
-AT\&T\index[idx]{Assembly Syntax!AT\&T} syntax and the other is the Intel\index[idx]{Assembly Syntax!Intel} syntax.
+AT\&T\index[idx]{Assembly Syntax!AT\&T|(} syntax and the other is the Intel\index[idx]{Assembly Syntax!Intel|(} syntax.
 
 The difference looks like this:\\
 \begin{minipage}[t]{0.5\textwidth}
@@ -1555,6 +1581,8 @@ mov AH,[ESI]
 \end{Verbatim}
 \end{minipage}
 \vspace{1ex}
+
+\index[idx]{Assembly Syntax!AT\&T|)}\index[idx]{Assembly Syntax!Intel|)}
 
 \printglossary
 
